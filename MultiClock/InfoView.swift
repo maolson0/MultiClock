@@ -40,7 +40,7 @@ struct InfoView: View {
                 .multilineTextAlignment(.center)
             Divider()
             VStack(alignment: .leading) {
-                Text("For more information on solar time, metric time and the inspiration for this application, please visit https://www.olsons.net/projects/civilsolar-metric-clock. Please send questions or bug reports to multiclock@olsons.net.")
+                Text("For more information on solar time, metric time and the inspiration for this application, please visit https://www.olsons.net/projects/multiclock. Please send questions or bug reports to multiclock@olsons.net.")
                     .italic()
                 Divider()
                 VStack(alignment: .leading) {
