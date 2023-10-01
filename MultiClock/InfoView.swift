@@ -51,13 +51,14 @@ struct InfoView: View {
                     Text("    First, it shows the current civil time. This is the local time in your time zone, taking daylight saving rules into account.")
                     Text("    Second, it shows the current solar time. That's the time based on the actual position of the sun in the sky where you are. At solar noon, the sun is at its highest point in the sky. At solar midnight, it's exactly on the other side of the Earth.")
                     Text("    Prior to the establishment of long-distance railroad service in the 1800s and the need for consistent schedules across the network, most towns and cities kept their local time based on the sun. If you traveled from one town to another, you'd adjust your watch to match the local church spire or town hall clock. This app takes care of that for you.")
-                    Text("     We generally think of noon as when the sun is highest in the sky. That moment depends on where you are standing on the Earth, of course. As you move west, the sun is directly overhead later. At civil noon -- 12:00 in your time zone -- the sun will be at its highest point only if you are at the meridian that defines that time zone. The solar time shown on the clock corrects for your location.")
+                    Text("     The moment when the sun is at its highest in the sky depends on where you are on the Earth, of course. As you move west, the sun is directly overhead later. At civil noon -- 12:00 in your time zone -- the sun will be at its highest point only if you are at the meridian that defines that time zone. The solar time shown on the clock adjusts solar noon for your actual location.")
                     Text("     But solar noon also shifts, relative to civil noon, over the course of the year. The Earth's orbit around the sun is an ellipse, not a perfect circle. The equator is at a slight angle to the ecliptic.")
                     Text("     The 'equation of time' is the tool that timekeepers use to make that correction. It's not the sort of equation you know from middle school. Rather, it's the number of minutes you need to add or subtract from civil noon to get solar noon. It depends on the date, of course, since that determines the Earth's position in its orbit.")
                     Text("     The clock computes the equation of time for the current date and time and uses that, along with your location, to get the correct solar time.")
                     Text("     You can learn more about the equation of time on Wikipedia at https://en.wikipedia.org/wiki/Equation_of_time.")
                 }
                 VStack(alignment: .leading) {
+                    Text(" ")
                     Text("Which time is which?")
                         .bold()
                     Text("    The tab marked by the government building")
