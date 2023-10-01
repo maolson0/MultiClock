@@ -1,6 +1,6 @@
 //
 //  InfoView.swift
-//  Solar metric clock
+//  MultiClock
 //
 //  Displays the MultiClock's "info" tab.
 //

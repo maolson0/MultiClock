@@ -1,6 +1,6 @@
 //
 //  MultiClockApp.swift
-//  MultiCooc
+//  MultiClock
 //
 //  Show the time in multiple ways. Maintains civil time in the current time zone and solar
 //  time based on the user's location. Computes sunrise/sunset times for both. Requires

@@ -1,6 +1,6 @@
 //
 //  SolarClock.swift
-//  Solar metric clock
+//  MultiClock
 //
 //  Implements a clock that keeps track of civil and solar time, based on the location of
 //  the user. Requires access to system location services for solar time. Will work in a
