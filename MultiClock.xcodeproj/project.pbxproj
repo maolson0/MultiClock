@@ -14,6 +14,12 @@
 		2758B27F2AC9D77500BEC60A /* MultiClockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2758B27E2AC9D77500BEC60A /* MultiClockTests.swift */; };
 		2758B2892AC9D77500BEC60A /* MultiClockUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2758B2882AC9D77500BEC60A /* MultiClockUITests.swift */; };
 		2758B28B2AC9D77500BEC60A /* MultiClockUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2758B28A2AC9D77500BEC60A /* MultiClockUITestsLaunchTests.swift */; };
+		2758B2992AC9D8CC00BEC60A /* Solar in Frameworks */ = {isa = PBXBuildFile; productRef = 2758B2982AC9D8CC00BEC60A /* Solar */; };
+		2758B29B2AC9D8F600BEC60A /* SolarClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2758B29A2AC9D8F600BEC60A /* SolarClock.swift */; };
+		2758B29D2AC9DA8800BEC60A /* CivilClockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2758B29C2AC9DA8800BEC60A /* CivilClockView.swift */; };
+		2758B29F2AC9DCA400BEC60A /* SolarClockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2758B29E2AC9DCA400BEC60A /* SolarClockView.swift */; };
+		2758B2A12AC9DD9900BEC60A /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2758B2A02AC9DD9900BEC60A /* PreferencesView.swift */; };
+		2758B2A32AC9DFD800BEC60A /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2758B2A22AC9DFD800BEC60A /* InfoView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +50,11 @@
 		2758B2842AC9D77500BEC60A /* MultiClockUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MultiClockUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2758B2882AC9D77500BEC60A /* MultiClockUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiClockUITests.swift; sourceTree = "<group>"; };
 		2758B28A2AC9D77500BEC60A /* MultiClockUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiClockUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		2758B29A2AC9D8F600BEC60A /* SolarClock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolarClock.swift; sourceTree = "<group>"; };
+		2758B29C2AC9DA8800BEC60A /* CivilClockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CivilClockView.swift; sourceTree = "<group>"; };
+		2758B29E2AC9DCA400BEC60A /* SolarClockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolarClockView.swift; sourceTree = "<group>"; };
+		2758B2A02AC9DD9900BEC60A /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
+		2758B2A22AC9DFD800BEC60A /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +62,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2758B2992AC9D8CC00BEC60A /* Solar in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,7 +107,12 @@
 			isa = PBXGroup;
 			children = (
 				2758B26D2AC9D77400BEC60A /* MultiClockApp.swift */,
+				2758B29A2AC9D8F600BEC60A /* SolarClock.swift */,
 				2758B26F2AC9D77400BEC60A /* ContentView.swift */,
+				2758B29C2AC9DA8800BEC60A /* CivilClockView.swift */,
+				2758B29E2AC9DCA400BEC60A /* SolarClockView.swift */,
+				2758B2A22AC9DFD800BEC60A /* InfoView.swift */,
+				2758B2A02AC9DD9900BEC60A /* PreferencesView.swift */,
 				2758B2712AC9D77500BEC60A /* Assets.xcassets */,
 				2758B2732AC9D77500BEC60A /* Preview Content */,
 			);
@@ -143,6 +160,9 @@
 			dependencies = (
 			);
 			name = MultiClock;
+			packageProductDependencies = (
+				2758B2982AC9D8CC00BEC60A /* Solar */,
+			);
 			productName = MultiClock;
 			productReference = 2758B26A2AC9D77400BEC60A /* MultiClock.app */;
 			productType = "com.apple.product-type.application";
@@ -215,6 +235,9 @@
 				Base,
 			);
 			mainGroup = 2758B2612AC9D77400BEC60A;
+			packageReferences = (
+				2758B2972AC9D8CC00BEC60A /* XCRemoteSwiftPackageReference "Solar" */,
+			);
 			productRefGroup = 2758B26B2AC9D77400BEC60A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -257,8 +280,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2758B29F2AC9DCA400BEC60A /* SolarClockView.swift in Sources */,
+				2758B2A12AC9DD9900BEC60A /* PreferencesView.swift in Sources */,
+				2758B29B2AC9D8F600BEC60A /* SolarClock.swift in Sources */,
+				2758B29D2AC9DA8800BEC60A /* CivilClockView.swift in Sources */,
 				2758B2702AC9D77400BEC60A /* ContentView.swift in Sources */,
 				2758B26E2AC9D77400BEC60A /* MultiClockApp.swift in Sources */,
+				2758B2A32AC9DFD800BEC60A /* InfoView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -425,9 +453,11 @@
 				DEVELOPMENT_TEAM = UBEXFHV68S;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "MultiClock uses your location to display solar time and sunrise/sunset times.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIRequiredDeviceCapabilities = "location-services";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -454,9 +484,11 @@
 				DEVELOPMENT_TEAM = UBEXFHV68S;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "MultiClock uses your location to display solar time and sunrise/sunset times.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIRequiredDeviceCapabilities = "location-services";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -588,6 +620,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		2758B2972AC9D8CC00BEC60A /* XCRemoteSwiftPackageReference "Solar" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ceeK/Solar";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		2758B2982AC9D8CC00BEC60A /* Solar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2758B2972AC9D8CC00BEC60A /* XCRemoteSwiftPackageReference "Solar" */;
+			productName = Solar;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 2758B2622AC9D77400BEC60A /* Project object */;
 }
