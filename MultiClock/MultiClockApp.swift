@@ -95,26 +95,26 @@ class MultiClock: ObservableObject {
 
     // These are all strings to simplify their display in ContentView
     // clock times for the civil and metric views
-    @Published var solar_hhmm = ""
-    @Published var solar_metric = ""
-    @Published var solar_metric_color: Color = .black
-    @Published var civil_hhmm = ""
-    @Published var civil_metric = ""
-    @Published var civil_metric_color: Color = .black
+    @Published var solar_hhmm = "---"
+    @Published var solar_metric = "---"
+    @Published var solar_metric_prime: Bool = false
+    @Published var civil_hhmm = "---"
+    @Published var civil_metric = "---"
+    @Published var civil_metric_prime: Bool = false
     
     // sunrise/sunset times for the hh:mm and metric time views
-    @Published var solar_metric_sunrise = ""
-    @Published var solar_metric_sunset = ""
-    @Published var solar_hhmm_sunrise = ""
-    @Published var solar_hhmm_sunset = ""
-    @Published var civil_metric_sunrise = ""
-    @Published var civil_metric_sunrise_color: Color = .black   // assume not a prime time
-    @Published var civil_metric_sunset = ""
-    @Published var civil_metric_sunset_color: Color = .black    // assume not a prime time
-    @Published var civil_hhmm_sunrise = ""
-    @Published var solar_metric_sunrise_color: Color = .black   // assume not a prime time
-    @Published var civil_hhmm_sunset = ""
-    @Published var solar_metric_sunset_color: Color = .black    // assume not a prime time
+    @Published var solar_metric_sunrise = "---"
+    @Published var solar_metric_sunset = "---"
+    @Published var solar_hhmm_sunrise = "---"
+    @Published var solar_hhmm_sunset = "---"
+    @Published var civil_metric_sunrise = "---"
+    @Published var civil_metric_sunrise_prime: Bool = false
+    @Published var civil_metric_sunset = "---"
+    @Published var civil_metric_sunset_prime: Bool = false
+    @Published var civil_hhmm_sunrise = "---"
+    @Published var solar_metric_sunrise_prime: Bool = false
+    @Published var civil_hhmm_sunset = "---"
+    @Published var solar_metric_sunset_prime: Bool = false
     
     // These are used in the day progress view
     @Published var civil_day_progress = 0.0
@@ -154,14 +154,14 @@ class MultiClock: ObservableObject {
         return (dateFormatter.string(from: d))
     }
     
-    private func primeColor(number: String) -> Color {
+    private func checkPrime(number: String) -> Bool {
         if let d = Int(number) {
             if (d.isPrime && mc_primetime) {
-                return (.red)
+                return (true)
             }
         }
         
-        return (.black)
+        return (false)
     }
         
     private func updateTimes() -> Void {
@@ -278,13 +278,13 @@ class MultiClock: ObservableObject {
         }
         
         // Color any prime numbers, if needed
-        civil_metric_color = primeColor(number: civil_metric)
-        civil_metric_sunrise_color = primeColor(number: civil_metric_sunrise)
-        civil_metric_sunset_color = primeColor(number: civil_metric_sunset)
+        civil_metric_prime = checkPrime(number: civil_metric)
+        civil_metric_sunrise_prime = checkPrime(number: civil_metric_sunrise)
+        civil_metric_sunset_prime = checkPrime(number: civil_metric_sunset)
         
-        solar_metric_color = primeColor(number: solar_metric)
-        solar_metric_sunrise_color = primeColor(number: solar_metric_sunrise)
-        solar_metric_sunset_color = primeColor(number: solar_metric_sunset)
+        solar_metric_prime = checkPrime(number: solar_metric)
+        solar_metric_sunrise_prime = checkPrime(number: solar_metric_sunrise)
+        solar_metric_sunset_prime = checkPrime(number: solar_metric_sunset)
     }
     
     func start() {

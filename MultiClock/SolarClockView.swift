@@ -34,6 +34,7 @@ import SwiftUI
 
 struct SolarClockView: View {
     @EnvironmentObject var mc: MultiClock
+    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         VStack {
@@ -92,7 +93,7 @@ struct SolarClockView: View {
                 VStack(alignment: .trailing, spacing: 6) {
                     Text(mc.solar_metric)
                         .font(.largeTitle)
-                        .foregroundColor(mc.solar_metric_color)
+                        .foregroundColor(mc.solar_metric_prime ? .red : (colorScheme == .dark ? .white : .black))
                     HStack {
                         Image(systemName: "sunrise")
                             .resizable()
@@ -100,7 +101,7 @@ struct SolarClockView: View {
                             .frame(width: 30, height: 30)
                         Text(" ")
                         Text(mc.solar_metric_sunrise)
-                            .foregroundColor(mc.solar_metric_sunrise_color)
+                            .foregroundColor(mc.solar_metric_sunrise_prime ? .red : (colorScheme == .dark ? .white : .black))
                         Text(" ")
                         Image(systemName: "sunset")
                             .resizable()
@@ -108,7 +109,7 @@ struct SolarClockView: View {
                             .frame(width: 30, height: 30)
                         Text(" ")
                         Text(mc.solar_metric_sunset)
-                            .foregroundColor(mc.solar_metric_sunset_color)
+                            .foregroundColor(mc.solar_metric_sunset_prime ? .red : (colorScheme == .dark ? .white : .black))
                     }
                 }
             }
