@@ -20,6 +20,7 @@
 		2758B29F2AC9DCA400BEC60A /* SolarClockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2758B29E2AC9DCA400BEC60A /* SolarClockView.swift */; };
 		2758B2A12AC9DD9900BEC60A /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2758B2A02AC9DD9900BEC60A /* PreferencesView.swift */; };
 		2758B2A32AC9DFD800BEC60A /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2758B2A22AC9DFD800BEC60A /* InfoView.swift */; };
+		2761D08E2AD0380B00D4FDF3 /* TimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2761D08D2AD0380B00D4FDF3 /* TimeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		2758B29E2AC9DCA400BEC60A /* SolarClockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolarClockView.swift; sourceTree = "<group>"; };
 		2758B2A02AC9DD9900BEC60A /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 		2758B2A22AC9DFD800BEC60A /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
+		2761D08D2AD0380B00D4FDF3 /* TimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +113,7 @@
 				2758B26F2AC9D77400BEC60A /* ContentView.swift */,
 				2758B29C2AC9DA8800BEC60A /* CivilClockView.swift */,
 				2758B29E2AC9DCA400BEC60A /* SolarClockView.swift */,
+				2761D08D2AD0380B00D4FDF3 /* TimeView.swift */,
 				2758B2A22AC9DFD800BEC60A /* InfoView.swift */,
 				2758B2A02AC9DD9900BEC60A /* PreferencesView.swift */,
 				2758B2712AC9D77500BEC60A /* Assets.xcassets */,
@@ -283,6 +286,7 @@
 				2758B29F2AC9DCA400BEC60A /* SolarClockView.swift in Sources */,
 				2758B2A12AC9DD9900BEC60A /* PreferencesView.swift in Sources */,
 				2758B29B2AC9D8F600BEC60A /* SolarClock.swift in Sources */,
+				2761D08E2AD0380B00D4FDF3 /* TimeView.swift in Sources */,
 				2758B29D2AC9DA8800BEC60A /* CivilClockView.swift in Sources */,
 				2758B2702AC9D77400BEC60A /* ContentView.swift in Sources */,
 				2758B26E2AC9D77400BEC60A /* MultiClockApp.swift in Sources */,
@@ -449,7 +453,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"MultiClock/Preview Content\"";
 				DEVELOPMENT_TEAM = UBEXFHV68S;
 				ENABLE_PREVIEWS = YES;
@@ -484,7 +488,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"MultiClock/Preview Content\"";
 				DEVELOPMENT_TEAM = UBEXFHV68S;
 				ENABLE_PREVIEWS = YES;
