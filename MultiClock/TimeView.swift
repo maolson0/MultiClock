@@ -37,177 +37,177 @@ struct TimeView: View {
     @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
-        ScrollView {
-            VStack {
-                Text(" ")
-                HStack {
+        // Use the GeometryReader to vertically center the scrollview on the display
+        GeometryReader { geometry in
+            ScrollView(.vertical) {
+                VStack {
                     HStack {
-                        Image(systemName: "building.columns")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 60, height:60)
-                        Text("Civil Time")
-                            .font(.system(size: 30, weight: .bold))
-                    }
-                    Spacer()
-                    Text(" ")
-                }
-                Divider()
-                HStack {
-                    VStack {
-                        Image(systemName: "deskclock")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 40, height: 40)
-                        Text("hh:mm")
-                    }
-                    Spacer()
-                    VStack(alignment: .trailing, spacing: 6) {
-                        Text(mc.civil_hhmm)
-                            .font(.largeTitle)
                         HStack {
-                            Image(systemName: "sunrise")
+                            Image(systemName: "building.columns")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 30, height: 30)
-                            Text(" ")
-                            Text(mc.civil_hhmm_sunrise)
-                            Text(" ")
-                            Image(systemName: "sunset")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 30, height: 30)
-                            Text(" ")
-                            Text(mc.civil_hhmm_sunset)
+                                .frame(width: 40, height:40)
+                            Text("Civil Time")
+                                .font(.system(size: 30, weight: .bold))
                         }
+                        .frame(maxWidth: .infinity, alignment: .center)
                     }
-                }
-                Divider()
-                HStack {
-                    VStack {
-                        Image(systemName: "ruler")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 40, height: 40)
-                        Text("metric")
-                    }
-                    Spacer()
-                    VStack(alignment: .trailing, spacing: 6) {
-                        Text(mc.civil_metric)
-                            .font(.largeTitle)
-                            .foregroundColor(mc.civil_metric_prime ? .red : (colorScheme == .dark ? .white : .black))
-                        HStack {
-                            Image(systemName: "sunrise")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 30, height: 30)
-                            Text(" ")
-                            Text(mc.civil_metric_sunrise)
-                                .foregroundColor(mc.civil_metric_sunrise_prime ? .red : (colorScheme == .dark ? .white : .black))
-                            Text(" ")
-                            Image(systemName: "sunset")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 30, height: 30)
-                            Text(" ")
-                            Text(mc.civil_metric_sunset)
-                                .foregroundColor(mc.civil_metric_sunset_prime ? .red : (colorScheme == .dark ? .white : .black))
-                        }
-                    }
-                }
-                Divider()
-                HStack {
-                    ProgressView(value: mc.civil_day_progress, total:100)
-                        .scaleEffect(x: 1, y: 4, anchor: .center)
-                    Text(mc.civil_day_prog_pct)
-                }
-                Divider()
-                Text(" ")
-                Divider()
-                HStack {
+                    Divider()
                     HStack {
-                        Image(systemName: "sun.max")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 60, height:60)
-                        Text("Solar Time")
-                            .font(.system(size: 30, weight: .bold))
-                    }
-                    Spacer()
-                    Text(" ")
-                }
-                Divider()
-                HStack {
-                    VStack {
-                        Image(systemName: "deskclock")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 40, height: 40)
-                        Text("hh:mm")
-                    }
-                    Spacer()
-                    VStack(alignment: .trailing, spacing: 6) {
-                        Text(mc.solar_hhmm)
-                            .font(.largeTitle)
-                        HStack {
-                            Image(systemName: "sunrise")
+                        VStack {
+                            Image(systemName: "deskclock")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 30, height: 30)
-                            Text(" ")
-                            Text(mc.solar_hhmm_sunrise)
-                            Text(" ")
-                            Image(systemName: "sunset")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 30, height: 30)
-                            Text(" ")
-                            Text(mc.solar_hhmm_sunset)
+                                .frame(width: 40, height: 40)
+                            Text("hh:mm")
+                        }
+                        Spacer()
+                        VStack(alignment: .trailing, spacing: 6) {
+                            Text(mc.civil_hhmm)
+                                .font(.largeTitle)
+                            HStack {
+                                Image(systemName: "sunrise")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 30, height: 30)
+                                Text(" ")
+                                Text(mc.civil_hhmm_sunrise)
+                                Text(" ")
+                                Image(systemName: "sunset")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 30, height: 30)
+                                Text(" ")
+                                Text(mc.civil_hhmm_sunset)
+                            }
                         }
                     }
-                }
-                Divider()
-                HStack {
-                    VStack {
-                        Image(systemName: "ruler")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 40, height: 40)
-                        Text("metric")
-                    }
-                    Spacer()
-                    VStack(alignment: .trailing, spacing: 6) {
-                        Text(mc.solar_metric)
-                            .font(.largeTitle)
-                            .foregroundColor(mc.solar_metric_prime ? .red : (colorScheme == .dark ? .white : .black))
-                        HStack {
-                            Image(systemName: "sunrise")
+                    Divider()
+                    HStack {
+                        VStack {
+                            Image(systemName: "ruler")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 30, height: 30)
-                            Text(" ")
-                            Text(mc.solar_metric_sunrise)
-                                .foregroundColor(mc.solar_metric_sunrise_prime ? .red : (colorScheme == .dark ? .white : .black))
-                            Text(" ")
-                            Image(systemName: "sunset")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 30, height: 30)
-                            Text(" ")
-                            Text(mc.solar_metric_sunset)
-                                .foregroundColor(mc.solar_metric_sunset_prime ? .red : (colorScheme == .dark ? .white : .black))
+                                .frame(width: 40, height: 40)
+                            Text("metric")
+                        }
+                        Spacer()
+                        VStack(alignment: .trailing, spacing: 6) {
+                            Text(mc.civil_metric)
+                                .font(.largeTitle)
+                                .foregroundColor(mc.civil_metric_prime ? .red : (colorScheme == .dark ? .white : .black))
+                            HStack {
+                                Image(systemName: "sunrise")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 30, height: 30)
+                                Text(" ")
+                                Text(mc.civil_metric_sunrise)
+                                    .foregroundColor(mc.civil_metric_sunrise_prime ? .red : (colorScheme == .dark ? .white : .black))
+                                Text(" ")
+                                Image(systemName: "sunset")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 30, height: 30)
+                                Text(" ")
+                                Text(mc.civil_metric_sunset)
+                                    .foregroundColor(mc.civil_metric_sunset_prime ? .red : (colorScheme == .dark ? .white : .black))
+                            }
                         }
                     }
+                    Divider()
+                    HStack {
+                        ProgressView(value: mc.civil_day_progress, total:100)
+                            .scaleEffect(x: 1, y: 3, anchor: .center)
+                        Text(mc.civil_day_prog_pct)
+                    }
+                    Divider()
+                    Divider()
+                    HStack {
+                        HStack {
+                            Image(systemName: "sun.max")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 40, height:40)
+                            Text("Solar Time")
+                                .font(.system(size: 30, weight: .bold))
+                        }
+                        .frame(maxWidth: .infinity, alignment: .center)
+                    }
+                    Divider()
+                    HStack {
+                        VStack {
+                            Image(systemName: "deskclock")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 40, height: 40)
+                            Text("hh:mm")
+                        }
+                        Spacer()
+                        VStack(alignment: .trailing, spacing: 6) {
+                            Text(mc.solar_hhmm)
+                                .font(.largeTitle)
+                            HStack {
+                                Image(systemName: "sunrise")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 30, height: 30)
+                                Text(" ")
+                                Text(mc.solar_hhmm_sunrise)
+                                Text(" ")
+                                Image(systemName: "sunset")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 30, height: 30)
+                                Text(" ")
+                                Text(mc.solar_hhmm_sunset)
+                            }
+                        }
+                    }
+                    Divider()
+                    HStack {
+                        VStack {
+                            Image(systemName: "ruler")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 40, height: 40)
+                            Text("metric")
+                        }
+                        Spacer()
+                        VStack(alignment: .trailing, spacing: 6) {
+                            Text(mc.solar_metric)
+                                .font(.largeTitle)
+                                .foregroundColor(mc.solar_metric_prime ? .red : (colorScheme == .dark ? .white : .black))
+                            HStack {
+                                Image(systemName: "sunrise")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 30, height: 30)
+                                Text(" ")
+                                Text(mc.solar_metric_sunrise)
+                                    .foregroundColor(mc.solar_metric_sunrise_prime ? .red : (colorScheme == .dark ? .white : .black))
+                                Text(" ")
+                                Image(systemName: "sunset")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 30, height: 30)
+                                Text(" ")
+                                Text(mc.solar_metric_sunset)
+                                    .foregroundColor(mc.solar_metric_sunset_prime ? .red : (colorScheme == .dark ? .white : .black))
+                            }
+                        }
+                    }
+                    Divider()
+                    HStack {
+                        ProgressView(value: mc.solar_day_progress, total:100)
+                            .scaleEffect(x: 1, y: 3, anchor: .center)
+                        Text(mc.solar_day_prog_pct)
+                    }
                 }
-                Divider()
-                HStack {
-                    ProgressView(value: mc.solar_day_progress, total:100)
-                        .scaleEffect(x: 1, y: 4, anchor: .center)
-                    Text(mc.solar_day_prog_pct)
-                }
-                Text(" ")
+                .padding(10)
+                .frame(width: geometry.size.width)      // Make the scroll view full-width
+                .frame(minHeight: geometry.size.height) // Set the content’s min height to the parent
             }
-            .padding(10)
         }
     }
 }
