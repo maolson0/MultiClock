@@ -20,6 +20,7 @@
 		2758B29F2AC9DCA400BEC60A /* SolarClockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2758B29E2AC9DCA400BEC60A /* SolarClockView.swift */; };
 		2758B2A12AC9DD9900BEC60A /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2758B2A02AC9DD9900BEC60A /* PreferencesView.swift */; };
 		2758B2A32AC9DFD800BEC60A /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2758B2A22AC9DFD800BEC60A /* InfoView.swift */; };
+		275C69172AD4BBBE002F7F7A /* ConverterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275C69162AD4BBBE002F7F7A /* ConverterView.swift */; };
 		2761D08E2AD0380B00D4FDF3 /* TimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2761D08D2AD0380B00D4FDF3 /* TimeView.swift */; };
 /* End PBXBuildFile section */
 
@@ -56,6 +57,7 @@
 		2758B29E2AC9DCA400BEC60A /* SolarClockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolarClockView.swift; sourceTree = "<group>"; };
 		2758B2A02AC9DD9900BEC60A /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 		2758B2A22AC9DFD800BEC60A /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
+		275C69162AD4BBBE002F7F7A /* ConverterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConverterView.swift; sourceTree = "<group>"; };
 		2761D08D2AD0380B00D4FDF3 /* TimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -114,6 +116,7 @@
 				2758B29C2AC9DA8800BEC60A /* CivilClockView.swift */,
 				2758B29E2AC9DCA400BEC60A /* SolarClockView.swift */,
 				2761D08D2AD0380B00D4FDF3 /* TimeView.swift */,
+				275C69162AD4BBBE002F7F7A /* ConverterView.swift */,
 				2758B2A22AC9DFD800BEC60A /* InfoView.swift */,
 				2758B2A02AC9DD9900BEC60A /* PreferencesView.swift */,
 				2758B2712AC9D77500BEC60A /* Assets.xcassets */,
@@ -283,6 +286,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				275C69172AD4BBBE002F7F7A /* ConverterView.swift in Sources */,
 				2758B29F2AC9DCA400BEC60A /* SolarClockView.swift in Sources */,
 				2758B2A12AC9DD9900BEC60A /* PreferencesView.swift in Sources */,
 				2758B29B2AC9D8F600BEC60A /* SolarClock.swift in Sources */,

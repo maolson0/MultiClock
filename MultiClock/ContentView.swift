@@ -54,6 +54,11 @@ struct ContentView: View {
                     Label("time", systemImage: "deskclock.fill")
                     Text("Time")
                 }
+            ConverterView()
+                .tabItem {
+                    Label("convert", systemImage: "arrow.left.arrow.right.square")
+                    Text("Convert)")
+                }
             InfoView()
                 .tabItem {
                     Label("info", systemImage: "info.circle.fill")

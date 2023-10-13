@@ -69,6 +69,16 @@ extension Date
     }
 }
 
+extension Date {
+    func get(_ components: Calendar.Component..., calendar: Calendar = Calendar.current) -> DateComponents {
+        return calendar.dateComponents(Set(components), from: self)
+    }
+
+    func get(_ component: Calendar.Component, calendar: Calendar = Calendar.current) -> Int {
+        return calendar.component(component, from: self)
+    }
+}
+
 extension Int {
     // Reasonably efficient way to factor an integer. Swiped from StackOverflow.
     // If any metric times are prime numbers (prime times), we highlight them in red.
@@ -80,7 +90,22 @@ extension Int {
     }
 }
 
+enum Selection {
+    case civil_hhmm
+    case civil_metric
+    case solar_hhmm
+    case solar_metric
+}
+
+class TimeConverter {
+    var tc_civil_hhmm = ""
+    var tc_civil_metric = ""
+    var tc_solar_hhmm = ""
+    var tc_solar_metric = ""
+}
+
 class MultiClock: ObservableObject {
+    // The solar clock does the work of solar/civil time computation
     private var mc_sc = SolarClock()
     
     // we want to update our clock every ten microdays, 0.864 seconds
@@ -316,6 +341,94 @@ extension MultiClock {
     func started() -> MultiClock {
         start()
         return self
+    }
+}
+
+extension MultiClock {
+    func convertTime(t: Int, which: Selection) -> TimeConverter {
+        let new_tc = TimeConverter()
+        
+        let solarTime = mc_sc.sc_solar_time
+        let civilTime = mc_sc.sc_civil_time
+            
+        // Solar/civil delta in seconds
+        let solar_civil_delta = civilTime.distance(to: solarTime!)
+
+        switch which {
+        case .civil_hhmm:
+            let hh = t / 100
+            let mm = t % 100
+            let secsSinceMidnight = Double(((hh * 60) + mm) * 60)
+            let civmet = secsSinceMidnight / 8.64
+            new_tc.tc_civil_metric = getMetricTimeString(t: civmet)
+            
+            let components = DateComponents(year: civilTime.get(.year), month: civilTime.get(.month), day: civilTime.get(.day), hour: hh, minute: mm)
+            let cal = Calendar.current
+            let civdate = cal.date(from: components)
+            new_tc.tc_civil_hhmm = getHHMMTimeString(d: civdate!, useGMT: false)
+
+            let soldate = civdate!.addingTimeInterval(solar_civil_delta)
+            new_tc.tc_solar_hhmm = getHHMMTimeString(d: soldate, useGMT: true)
+
+            let solarSecsSinceMidnight = soldate.timeIntervalSinceMidnightGMT
+            let solmet = solarSecsSinceMidnight! / 8.64
+            new_tc.tc_solar_metric = getMetricTimeString(t: solmet)
+
+        case .solar_hhmm:
+            let hh = t / 100
+            let mm = t % 100
+            let solarSecsSinceMidnight = Double(((hh * 60) + mm) * 60)
+            let solmet = solarSecsSinceMidnight / 8.64
+            new_tc.tc_solar_metric = getMetricTimeString(t: solmet)
+            
+            let components = DateComponents(year: solarTime!.get(.year), month: solarTime!.get(.month), day: solarTime!.get(.day), hour: hh, minute: mm)
+            var cal = Calendar(identifier: .iso8601)
+            cal.timeZone = TimeZone(identifier: "UTC")!
+            let soldate = cal.date(from: components)
+            new_tc.tc_solar_hhmm = getHHMMTimeString(d: soldate!, useGMT: true)
+
+            let civdate = soldate!.addingTimeInterval(-solar_civil_delta)
+            new_tc.tc_civil_hhmm = getHHMMTimeString(d: civdate, useGMT: false)
+
+            let secsSinceMidnight = civdate.timeIntervalSinceMidnightLocal
+            let civmet = secsSinceMidnight! / 8.64
+            new_tc.tc_civil_metric = getMetricTimeString(t: civmet)
+
+        case .solar_metric:
+            new_tc.tc_solar_metric = getMetricTimeString(t: Double(t))
+            
+            let solarSecsSinceMidnight = Double(t) * 8.64
+            var cal = Calendar(identifier: .iso8601)
+            cal.timeZone = TimeZone(identifier: "UTC")!
+            let components = DateComponents(year: solarTime!.get(.year), month: solarTime!.get(.month), day: solarTime!.get(.day), hour: 0, minute: 0)
+            let soldate = cal.date(from: components)!.addingTimeInterval(solarSecsSinceMidnight)
+            new_tc.tc_solar_hhmm = getHHMMTimeString(d: soldate, useGMT: true)
+
+            let civdate = soldate.addingTimeInterval(-solar_civil_delta)
+            new_tc.tc_civil_hhmm = getHHMMTimeString(d: civdate, useGMT: false)
+            
+            let secsSinceMidnight = civdate.timeIntervalSinceMidnightLocal
+            let civmet = secsSinceMidnight! / 8.64
+            new_tc.tc_civil_metric = getMetricTimeString(t: civmet)
+
+        case .civil_metric:
+            new_tc.tc_civil_metric = getMetricTimeString(t: Double(t))
+            
+            let secsSinceMidnight = Double(t) * 8.64
+            let cal = Calendar.current
+            let components = DateComponents(year: civilTime.get(.year), month: civilTime.get(.month), day: civilTime.get(.day), hour: 0, minute: 0)
+            let civdate = cal.date(from: components)!.addingTimeInterval(secsSinceMidnight)
+            new_tc.tc_civil_hhmm = getHHMMTimeString(d: civdate, useGMT: false)
+
+            let soldate = civdate.addingTimeInterval(solar_civil_delta)
+            new_tc.tc_solar_hhmm = getHHMMTimeString(d: soldate, useGMT: true)
+            
+            let solarSecsSinceMidnight = soldate.timeIntervalSinceMidnightGMT
+            let solmet = solarSecsSinceMidnight! / 8.64
+            new_tc.tc_solar_metric = getMetricTimeString(t: solmet)
+        }
+        
+        return (new_tc)
     }
 }
 
