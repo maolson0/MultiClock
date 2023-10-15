@@ -168,7 +168,7 @@ class MultiClock: ObservableObject {
         if (mc_12hour) {
             dateFormatter.dateFormat = "h:mm a"
         } else {
-            dateFormatter.dateFormat = "HH:MM"
+            dateFormatter.dateFormat = "HH:mm"
         }
         
         // We use GMT for the solar time displays to avoid daylight saving changes
