@@ -14,6 +14,7 @@ enum AmPm {
 
 struct ConverterView: View {
     @EnvironmentObject var mc: MultiClock
+    @Environment(\.colorScheme) private var colorScheme
 
     // selected stores which of the four time fields -- solar hhmm/metric, civil hhmm/metric -- the user selected
     @State private var selected: Selection? = nil
@@ -32,7 +33,8 @@ struct ConverterView: View {
     @State private var nDigits = 0
     
     // pop up alerts on bad user entries
-    @State private var badTimeEntered = false
+    @State private var badHHMMTimeEntered = false
+    @State private var badMetricTimeEntered = false
     @State private var needToSelectFimeField = false
 
     let buttonFont = Font.largeTitle
@@ -100,18 +102,17 @@ struct ConverterView: View {
                     }
                 }
             }.padding(framePadding)
-                .alert("Invalid time", isPresented: $badTimeEntered) {
-                    // add buttons here
-                } message: {
+                .alert("Invalid time", isPresented: $badHHMMTimeEntered) { } message: {
                     if (mc.mc_12hour) {
                         Text("Please enter a time between 12:00 am and 11:59 pm.")
                     } else {
                         Text("Please enter a time between 00:00 and 23:59.")
                     }
                 }
-                .alert("Choose time", isPresented: $needToSelectFimeField) {
-                    // add buttons here
-                } message: {
+                .alert("Invalid time", isPresented: $badMetricTimeEntered) { } message: {
+                    Text("Please enter at least one digit for metric time")
+                }
+                .alert("Choose time", isPresented: $needToSelectFimeField) { } message: {
                     Text("Tap one of the four time fields to enter a time.")
                 }
 
@@ -486,10 +487,14 @@ extension ConverterView {
         }
         if (selected == .civil_hhmm || selected == .solar_hhmm) {
             if (!validateHHMMTime(t: enteredNumber)) {
-                badTimeEntered = true
-                resetForm()
+                badHHMMTimeEntered = true
                 return
             }
+        }
+        
+        if ((selected == .civil_metric || selected == .solar_metric) && nDigits == 0) {
+            badMetricTimeEntered = true
+            return
         }
         
         // If we're using a 12-hour clock, adjust hours to 24-hour clock based on am/pm input
@@ -589,6 +594,9 @@ extension ConverterView {
                     HStack {
                         Text(civil_metric)
                             .font(textFont)
+                            .foregroundColor(civil_metric.isPrimeMetricTime ?
+                                             (mc.mc_primetime ? .red : (colorScheme == .dark ? .white : .black))
+                                             : (colorScheme == .dark ? .white : .black))
                             .lineLimit(1)
                             .frame(maxWidth: .infinity, alignment: .center)
                             .padding(2)
@@ -603,6 +611,9 @@ extension ConverterView {
                         Text(" ")
                         Text(solar_metric)
                             .font(textFont)
+                            .foregroundColor(solar_metric.isPrimeMetricTime ?
+                                             (mc.mc_primetime ? .red : (colorScheme == .dark ? .white : .black))
+                                             : (colorScheme == .dark ? .white : .black))
                             .lineLimit(1)
                             .frame(maxWidth: .infinity, alignment: .center)
                             .padding(2)

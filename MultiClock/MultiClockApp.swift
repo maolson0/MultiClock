@@ -79,17 +79,6 @@ extension Date {
     }
 }
 
-extension Int {
-    // Reasonably efficient way to factor an integer. Swiped from StackOverflow.
-    // If any metric times are prime numbers (prime times), we highlight them in red.
-    var isPrime: Bool {
-        guard self >= 2     else { return false }
-        guard self != 2     else { return true  }
-        guard self % 2 != 0 else { return false }
-        return !stride(from: 3, through: Int(sqrt(Double(self))), by: 2).contains { self % $0 == 0 }
-    }
-}
-
 enum Selection {
     case civil_hhmm
     case civil_metric
@@ -123,10 +112,8 @@ class MultiClock: ObservableObject {
     // clock times for the civil and metric views
     @Published var solar_hhmm = "---"
     @Published var solar_metric = "---"
-    @Published var solar_metric_prime: Bool = false
     @Published var civil_hhmm = "---"
     @Published var civil_metric = "---"
-    @Published var civil_metric_prime: Bool = false
     
     // sunrise/sunset times for the hh:mm and metric time views
     @Published var solar_metric_sunrise = "---"
@@ -134,13 +121,9 @@ class MultiClock: ObservableObject {
     @Published var solar_hhmm_sunrise = "---"
     @Published var solar_hhmm_sunset = "---"
     @Published var civil_metric_sunrise = "---"
-    @Published var civil_metric_sunrise_prime: Bool = false
     @Published var civil_metric_sunset = "---"
-    @Published var civil_metric_sunset_prime: Bool = false
     @Published var civil_hhmm_sunrise = "---"
-    @Published var solar_metric_sunrise_prime: Bool = false
     @Published var civil_hhmm_sunset = "---"
-    @Published var solar_metric_sunset_prime: Bool = false
     
     // These are used in the day progress view
     @Published var civil_day_progress = 0.0
@@ -180,16 +163,6 @@ class MultiClock: ObservableObject {
         return (dateFormatter.string(from: d))
     }
     
-    private func checkPrime(number: String) -> Bool {
-        if let d = Int(number) {
-            if (d.isPrime && mc_primetime) {
-                return (true)
-            }
-        }
-        
-        return (false)
-    }
-        
     private func updateTimes() -> Void {
         // get current civil and solar times from our solar clock
         mc_sc.updateTimes()
@@ -302,15 +275,6 @@ class MultiClock: ObservableObject {
             solar_day_progress = 0.0
             solar_day_prog_pct = "--"
         }
-        
-        // Color any prime numbers, if needed
-        civil_metric_prime = checkPrime(number: civil_metric)
-        civil_metric_sunrise_prime = checkPrime(number: civil_metric_sunrise)
-        civil_metric_sunset_prime = checkPrime(number: civil_metric_sunset)
-        
-        solar_metric_prime = checkPrime(number: solar_metric)
-        solar_metric_sunrise_prime = checkPrime(number: solar_metric_sunrise)
-        solar_metric_sunset_prime = checkPrime(number: solar_metric_sunset)
     }
     
     func start() {

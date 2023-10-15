@@ -32,6 +32,36 @@
 
 import SwiftUI
 
+// We want to know whether a metric time is a prime number so we can highlight it in the clock display.
+// Hard-code the primes up to the square root of a four-digit integer and test them on the metric time
+// strings supplied.
+//
+// This extension gets used in TimeView and ConverterView. I declare it here since it spans multiple views.
+
+var PrimeList: [Int] = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47,
+  53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101]
+var nPrimes = 26
+extension String {
+    var isPrimeMetricTime: Bool {
+        if let mt = Int(self) {
+            for i in 0...nPrimes-1 {
+                if (mt == PrimeList[i]) {
+                    return true
+                }
+                if ((mt % PrimeList[i]) == 0) {
+                    return false
+                }
+            }
+            // by here, not divisible by any of the prime factors
+            return true
+        }
+        // wasn't convertible to an int, can't be a prime int
+        return false
+    }
+}
+
+
+
 struct ContentView: View {
     @EnvironmentObject var mc: MultiClock
     
