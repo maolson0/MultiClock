@@ -37,18 +37,6 @@ struct ContentView: View {
     
     var body: some View {
         TabView() {
-            /*
-            CivilClockView()
-                .tabItem {
-                    Label("civil", systemImage: "building.columns.fill")
-                    Text("Civil")
-                }
-            SolarClockView()
-                .tabItem {
-                    Label("solar", systemImage: "sun.max.fill")
-                    Text("Solar")
-                }
-             */
             TimeView()
                 .tabItem {
                     Label("time", systemImage: "deskclock.fill")
