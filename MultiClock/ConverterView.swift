@@ -50,21 +50,41 @@ struct ConverterView: View {
             VStack {
                 Spacer()
                 header
-                HStack {
-                    VStack {
-                        timeConvertDisplay  // Four time fields and the convert button
-                        labelRow            // Row that labels civil and solar time and has "convert" button
-                        Spacer()
-                    }
-                    Divider()
-                    Divider()
+                if (mc.mc_lhconverter) {
+                    // lefties get the keypad on the left
                     HStack {
-                        digitPad        // The 0-9 pad with the "del" key
-                        if (mc.mc_12hour) {
-                            ampmPad         // the am/pm buttons
+                        HStack {
+                            digitPad        // The 0-9 pad with the "del" key
+                            if (mc.mc_12hour) {
+                                ampmPad         // the am/pm buttons
+                            }
+                            Divider()
+                            Divider()
+                            VStack {
+                                timeConvertDisplay  // Four time fields and the convert button
+                                labelRow            // Row that labels civil and solar time and has "convert" button
+                                Spacer()
+                            }
                         }
-                   }
-                }
+                    }
+                } else {
+                    // righties get the keypad on the right
+                    HStack {
+                        VStack {
+                            timeConvertDisplay  // Four time fields and the convert button
+                            labelRow            // Row that labels civil and solar time and has "convert" button
+                            Spacer()
+                        }
+                        Divider()
+                        Divider()
+                        HStack {
+                            digitPad        // The 0-9 pad with the "del" key
+                            if (mc.mc_12hour) {
+                                ampmPad         // the am/pm buttons
+                            }
+                        }
+                    }
+               }
             }.padding(framePadding)
         } else {
             // vertically-stacked layout for portrait mode

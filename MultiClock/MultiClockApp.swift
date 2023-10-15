@@ -115,6 +115,7 @@ class MultiClock: ObservableObject {
     // settable in the preferences tab of ContentView
     @Published var mc_primetime = true
     @Published var mc_12hour = true
+    @Published var mc_lhconverter = false
     
     // These are all strings to simplify their display in their respective views
 

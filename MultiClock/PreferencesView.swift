@@ -43,7 +43,7 @@ struct PreferencesView: View {
                     Image(systemName: "gearshape")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 80, height:80)
+                        .frame(width: 40, height:40)
                     Text("Preferences")
                         .font(.system(size: 30, weight: .bold))
                 }
@@ -72,6 +72,15 @@ struct PreferencesView: View {
                 // if system-wide time is set to 24-hour clock, this setting is overridden for displayed times
                 Toggle("", isOn: $mc.mc_12hour)
             }
+            Divider()
+            HStack {
+                Text("Left-handed converter")
+                    .font(.title)
+                Spacer()
+                // if system-wide time is set to 24-hour clock, this setting is overridden for displayed times
+                Toggle("", isOn: $mc.mc_lhconverter)
+            }
+
         }
         .padding(10)
     }
