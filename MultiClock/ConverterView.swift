@@ -15,9 +15,10 @@ enum AmPm {
 struct ConverterView: View {
     @EnvironmentObject var mc: MultiClock
 
-    @State private var message = " "
+    // selected stores which of the four time fields -- solar hhmm/metric, civil hhmm/metric -- the user selected
     @State private var selected: Selection? = nil
     
+    // strings used to display times in the time display
     @State private var civil_hhmm = "hh:mm"
     @State private var civil_ampm = ""
     @State private var civil_metric = "0000"
@@ -26,8 +27,13 @@ struct ConverterView: View {
     @State private var solar_metric = "0000"
     @State private var isAmPm: AmPm? = nil
     
+    // store the digits entered by the user
     @State private var digits: [Int?] = [nil, nil, nil, nil]
     @State private var nDigits = 0
+    
+    // pop up alerts on bad user entries
+    @State private var badTimeEntered = false
+    @State private var needToSelectFimeField = false
 
     let buttonFont = Font.largeTitle
     let buttonWidth: CGFloat = 80
@@ -39,16 +45,57 @@ struct ConverterView: View {
 
     // This is the converter view, composed of variables defined below to cut down clutter a bit.
     var body: some View {
-        VStack {
-            Spacer()
-            header
-            timeConvertDisplay  // Four time fields and the convert button
-            labelRow            // Row that labels civil and solar time and has "convert" button
-            HStack {
-                digitPad        // The 0-9 pad with the "del" key
-                ampmPad         // the am/pm buttons
-            }
-        }.padding(framePadding)
+        if (UIDevice.current.orientation.isLandscape) {
+            // side-by-side layout for landscape mode
+            VStack {
+                Spacer()
+                header
+                HStack {
+                    VStack {
+                        timeConvertDisplay  // Four time fields and the convert button
+                        labelRow            // Row that labels civil and solar time and has "convert" button
+                        Spacer()
+                    }
+                    Divider()
+                    Divider()
+                    HStack {
+                        digitPad        // The 0-9 pad with the "del" key
+                        if (mc.mc_12hour) {
+                            ampmPad         // the am/pm buttons
+                        }
+                   }
+                }
+            }.padding(framePadding)
+        } else {
+            // vertically-stacked layout for portrait mode
+            VStack {
+                Spacer()
+                header
+                timeConvertDisplay  // Four time fields and the convert button
+                labelRow            // Row that labels civil and solar time and has "convert" button
+                HStack {
+                    digitPad        // The 0-9 pad with the "del" key
+                    if (mc.mc_12hour) {
+                        ampmPad         // the am/pm buttons
+                    }
+                }
+            }.padding(framePadding)
+                .alert("Invalid time", isPresented: $badTimeEntered) {
+                    // add buttons here
+                } message: {
+                    if (mc.mc_12hour) {
+                        Text("Please enter a time between 12:00 am and 11:59 pm.")
+                    } else {
+                        Text("Please enter a time between 00:00 and 23:59.")
+                    }
+                }
+                .alert("Choose time", isPresented: $needToSelectFimeField) {
+                    // add buttons here
+                } message: {
+                    Text("Tap one of the four time fields to enter a time.")
+                }
+
+        }
     }
 }
 
@@ -203,6 +250,7 @@ extension ConverterView {
     private func pressDigit(d: Int) {
         // Don't take keypad input unless a time field is selected
         if (selected == nil) {
+            needToSelectFimeField = true
             return
         }
         
@@ -314,12 +362,18 @@ extension ConverterView {
             // no am/pm in metric times
             return
         }
-        if (selected == .civil_hhmm) {
-            civil_ampm = "am"
+        if (mc.mc_12hour) {
+            if (selected == .civil_hhmm) {
+                civil_ampm = "am"
+            } else {
+                solar_ampm = "am"
+            }
+            isAmPm = .am
         } else {
-            solar_ampm = "am"
+            civil_ampm = ""
+            solar_ampm = ""
+            isAmPm = nil
         }
-        isAmPm = .am
     }
     private func setPM()
     {
@@ -384,8 +438,14 @@ extension ConverterView {
         let hh = t / 100
         let mm = t % 100
         
-        if (hh > 12 || hh == 0 || mm > 59) {
-            return false
+        if (mc.mc_12hour) {
+            if (hh > 12 || hh == 0 || mm > 59) {
+                return false
+            }
+        } else {
+            if (hh > 23 || mm > 59) {
+                return false
+            }
         }
         return true
     }
@@ -395,6 +455,7 @@ extension ConverterView {
         var enteredNumber = 0
         
         if (selected == nil) {
+            needToSelectFimeField = true
             return
         }
         
@@ -405,20 +466,23 @@ extension ConverterView {
         }
         if (selected == .civil_hhmm || selected == .solar_hhmm) {
             if (!validateHHMMTime(t: enteredNumber)) {
+                badTimeEntered = true
                 resetForm()
                 return
             }
         }
         
-        // adjust hours to 24-hour clock based on am/pm input
-        if (selected == .civil_hhmm || selected == .solar_hhmm) {
-            if (isAmPm == .pm) {
-                if (enteredNumber < 1200) {
-                    enteredNumber += 1200
-                }
-            } else {
-                if (enteredNumber >= 1200) {
-                    enteredNumber -= 1200
+        // If we're using a 12-hour clock, adjust hours to 24-hour clock based on am/pm input
+        if (mc.mc_12hour) {
+            if (selected == .civil_hhmm || selected == .solar_hhmm) {
+                if (isAmPm == .pm) {
+                    if (enteredNumber < 1200) {
+                        enteredNumber += 1200
+                    }
+                } else {
+                    if (enteredNumber >= 1200) {
+                        enteredNumber -= 1200
+                    }
                 }
             }
         }
@@ -537,14 +601,24 @@ extension ConverterView {
         switch s {
         case .civil_hhmm:
             civil_hhmm = "  :  "
-            civil_ampm = "am"
-            isAmPm = .am
+            if (mc.mc_12hour) {
+                civil_ampm = "am"
+                isAmPm = .am
+            } else {
+                civil_ampm = ""
+                isAmPm = nil
+            }
         case .civil_metric:
             civil_metric = " "
         case .solar_hhmm:
             solar_hhmm = "  :  "
-            solar_ampm = "am"
-            isAmPm = .am
+            if (mc.mc_12hour) {
+                solar_ampm = "am"
+                isAmPm = .am
+            } else {
+                solar_ampm = ""
+                isAmPm = nil
+            }
         case .solar_metric:
             solar_metric = "    "
         }
@@ -558,7 +632,6 @@ extension ConverterView {
         solar_metric = " "
         civil_ampm = ""
         solar_ampm = ""
-        message = " "
         for i in 0...3 {
             digits[i] = nil
         }

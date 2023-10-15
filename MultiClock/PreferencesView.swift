@@ -69,7 +69,7 @@ struct PreferencesView: View {
                 Text("12-hr clock")
                     .font(.title)
                 Spacer()
-                // if system-wide time is set to 24-hour clock, this setting is overridden
+                // if system-wide time is set to 24-hour clock, this setting is overridden for displayed times
                 Toggle("", isOn: $mc.mc_12hour)
             }
         }
