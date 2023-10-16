@@ -119,9 +119,8 @@ extension TimeView {
                 VStack(alignment: .trailing, spacing: 6) {
                     Text(mc.civil_metric)
                         .font(.largeTitle)
-                        .foregroundColor(mc.civil_metric.isPrimeMetricTime ?
-                                         (mc.mc_primetime ? .red : (colorScheme == .dark ? .white : .black))
-                                         : (colorScheme == .dark ? .white : .black))
+                        .foregroundColor(mc.civil_metric.isPrimeMetricTime && mc.mc_primetime ?
+                                         .red : (colorScheme == .dark ? .white : .black))
                     HStack {
                         Image(systemName: "sunrise")
                             .resizable()
@@ -129,9 +128,8 @@ extension TimeView {
                             .frame(width: 30, height: 30)
                         Text(" ")
                         Text(mc.civil_metric_sunrise)
-                            .foregroundColor(mc.civil_metric_sunrise.isPrimeMetricTime ?
-                                             (mc.mc_primetime ? .red : (colorScheme == .dark ? .white : .black))
-                                             : (colorScheme == .dark ? .white : .black))
+                            .foregroundColor(mc.civil_metric_sunrise.isPrimeMetricTime && mc.mc_primetime ?
+                                             .red : (colorScheme == .dark ? .white : .black))
                         Text(" ")
                         Image(systemName: "sunset")
                             .resizable()
@@ -139,9 +137,8 @@ extension TimeView {
                             .frame(width: 30, height: 30)
                         Text(" ")
                         Text(mc.civil_metric_sunset)
-                            .foregroundColor(mc.civil_metric_sunset.isPrimeMetricTime ?
-                                             (mc.mc_primetime ? .red : (colorScheme == .dark ? .white : .black))
-                                             : (colorScheme == .dark ? .white : .black))
+                            .foregroundColor(mc.civil_metric_sunset.isPrimeMetricTime && mc.mc_primetime ?
+                                             .red : (colorScheme == .dark ? .white : .black))
                     }
                 }
             }
@@ -214,9 +211,8 @@ extension TimeView {
                 VStack(alignment: .trailing, spacing: 6) {
                     Text(mc.solar_metric)
                         .font(.largeTitle)
-                        .foregroundColor(mc.solar_metric.isPrimeMetricTime ?
-                                         (mc.mc_primetime ? .red : (colorScheme == .dark ? .white : .black))
-                                         : (colorScheme == .dark ? .white : .black))
+                        .foregroundColor(mc.solar_metric.isPrimeMetricTime && mc.mc_primetime ?
+                                         .red : (colorScheme == .dark ? .white : .black))
                     HStack {
                         Image(systemName: "sunrise")
                             .resizable()
@@ -224,9 +220,8 @@ extension TimeView {
                             .frame(width: 30, height: 30)
                         Text(" ")
                         Text(mc.solar_metric_sunrise)
-                            .foregroundColor(mc.solar_metric_sunrise.isPrimeMetricTime ?
-                                             (mc.mc_primetime ? .red : (colorScheme == .dark ? .white : .black))
-                                             : (colorScheme == .dark ? .white : .black))
+                            .foregroundColor(mc.solar_metric_sunrise.isPrimeMetricTime && mc.mc_primetime ?
+                                             .red : (colorScheme == .dark ? .white : .black))
                         Text(" ")
                         Image(systemName: "sunset")
                             .resizable()
@@ -234,9 +229,8 @@ extension TimeView {
                             .frame(width: 30, height: 30)
                         Text(" ")
                         Text(mc.solar_metric_sunset)
-                            .foregroundColor(mc.solar_metric_sunset.isPrimeMetricTime ?
-                                             (mc.mc_primetime ? .red : (colorScheme == .dark ? .white : .black))
-                                             : (colorScheme == .dark ? .white : .black))
+                            .foregroundColor(mc.solar_metric_sunset.isPrimeMetricTime && mc.mc_primetime ?
+                                             .red : (colorScheme == .dark ? .white : .black))
                     }
                 }
             }

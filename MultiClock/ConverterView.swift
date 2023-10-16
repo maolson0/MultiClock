@@ -303,6 +303,7 @@ extension ConverterView {
     private func timeString(dArray: [Int?], nd: Int, which: Selection) -> String {
         var newStr = ""
         
+        
         for i in 0...3 {
             if let d = dArray[i] {
                 newStr = newStr + String(d)
@@ -311,6 +312,10 @@ extension ConverterView {
                 newStr = " " + newStr
             } else {
                 // This is a metric time and we're out of digits, no need to continue iterating through the array
+                // Need at least one char in the string so the display is right
+                if (newStr == "") {
+                    newStr = " "
+                }
                 return (newStr)
             }
         }
@@ -594,9 +599,8 @@ extension ConverterView {
                     HStack {
                         Text(civil_metric)
                             .font(textFont)
-                            .foregroundColor(civil_metric.isPrimeMetricTime ?
-                                             (mc.mc_primetime ? .red : (colorScheme == .dark ? .white : .black))
-                                             : (colorScheme == .dark ? .white : .black))
+                            .foregroundColor(civil_metric.isPrimeMetricTime && mc.mc_primetime ?
+                                             .red : (colorScheme == .dark ? .white : .black))
                             .lineLimit(1)
                             .frame(maxWidth: .infinity, alignment: .center)
                             .padding(2)
@@ -611,9 +615,8 @@ extension ConverterView {
                         Text(" ")
                         Text(solar_metric)
                             .font(textFont)
-                            .foregroundColor(solar_metric.isPrimeMetricTime ?
-                                             (mc.mc_primetime ? .red : (colorScheme == .dark ? .white : .black))
-                                             : (colorScheme == .dark ? .white : .black))
+                            .foregroundColor(solar_metric.isPrimeMetricTime && mc.mc_primetime ?
+                                             .red : (colorScheme == .dark ? .white : .black))
                             .lineLimit(1)
                             .frame(maxWidth: .infinity, alignment: .center)
                             .padding(2)
