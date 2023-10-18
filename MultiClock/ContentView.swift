@@ -60,7 +60,9 @@ extension String {
     }
 }
 
-
+extension NSNotification {
+    static let uDefaults = Notification.Name.init("NSUserDefaultsDidChangeNotification")
+}
 
 struct ContentView: View {
     @EnvironmentObject var mc: MultiClock
@@ -82,13 +84,14 @@ struct ContentView: View {
                     Label("info", systemImage: "info.circle.fill")
                     Text("Info")
                 }
-            PreferencesView()
-                .tabItem {
-                    Label("prefs", systemImage: "gearshape.fill")
-                    Text("Prefs")
-                }
+        }.onAppear {
+            NotificationCenter.default.addObserver(forName: NSNotification.uDefaults, object: nil, queue: nil) { _ in
+                // if the user changes defaults in the systems settings, reload the state variables in the clock
+                mc.loadDefaults()
+            }
         }
     }
+    
 }
 
 struct ContentView_Previews:

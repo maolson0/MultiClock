@@ -101,10 +101,10 @@ class MultiClock: ObservableObject {
     // fast enough to keep the display right, infrequent enough to avoid wasting CPU time
     private var mc_timer = Timer()
     
-    // settable in the preferences tab of ContentView
-    @Published var mc_primetime = true
-    @Published var mc_12hour = true
-    @Published var mc_lhconverter = false
+    // settable in the iOS Settings app
+    var mc_primetime = true
+    var mc_12hour = true
+    var mc_lhconverter = false
     
     // These are all strings to simplify their display in their respective views
 
@@ -278,8 +278,11 @@ class MultiClock: ObservableObject {
     }
     
     func start() {
-        // wake up, look at the clock!
+        // as soon as you wake up, look at the clock!
         self.updateTimes()
+        
+        // get settings from the user defaults
+        self.initDefaults()
         
         // Finest-grained time display is in the metric time view. The low digit of that number changes
         // every one hundred microdays. We set a timer here to get the current time every ten microdays,p
@@ -297,8 +300,35 @@ class MultiClock: ObservableObject {
     
     // is this necessary?
     deinit {
-        // torn off the timer when the app shuts down
+        // turn off the timer when the app shuts down
         mc_timer.invalidate()
+    }
+    
+    private func initDefaults() {
+        // First time we run on a device, need to register the defaults set in the Setting bundle with
+        // the UserDefaults database. It's kind of bogus that iOS doesn't do this for you automatically.
+        // Thanks, StackOverflow!
+        let settingsUrl = Bundle.main.url(forResource: "Settings", withExtension: "bundle")!.appendingPathComponent("Root.plist")
+        let settingsPlist = NSDictionary(contentsOf:settingsUrl)!
+        let preferences = settingsPlist["PreferenceSpecifiers"] as! [NSDictionary]
+        
+        var defaultsToRegister = Dictionary<String, Any>()
+        
+        for preference in preferences {
+            guard let key = preference["Key"] as? String else {
+                NSLog("Key not found")
+                continue
+            }
+            defaultsToRegister[key] = preference["DefaultValue"]
+        }
+        UserDefaults.standard.register(defaults: defaultsToRegister)
+    }
+    
+    func loadDefaults() {
+        let defaults = UserDefaults.standard
+        self.mc_12hour = defaults.bool(forKey: "mc_12hour")
+        self.mc_primetime = defaults.bool(forKey: "mc_primetime")
+        self.mc_lhconverter = defaults.bool(forKey: "mc_lefthanded")
     }
 }
 

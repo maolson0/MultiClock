@@ -41,6 +41,8 @@ struct ConverterView: View {
     let buttonWidth: CGFloat = 80
     let buttonHeight: CGFloat = 64
     let buttonPadding: CGFloat = 3
+    let buttonForeground = Color.white
+    let buttonBackground = Color.gray
     let framePadding: CGFloat = 10
     let textWid = 100.0
     let textFont = Font.title
@@ -88,6 +90,19 @@ struct ConverterView: View {
                     }
                }
             }.padding(framePadding)
+                .alert("Invalid time", isPresented: $badHHMMTimeEntered) { } message: {
+                    if (mc.mc_12hour) {
+                        Text("Please enter a time between 12:00 am and 11:59 pm.")
+                    } else {
+                        Text("Please enter a time between 00:00 and 23:59.")
+                    }
+                }
+                .alert("Invalid time", isPresented: $badMetricTimeEntered) { } message: {
+                    Text("Please enter at least one digit for metric time")
+                }
+                .alert("Choose time", isPresented: $needToSelectFimeField) { } message: {
+                    Text("Tap one of the four time fields to enter a time.")
+                }
         } else {
             // vertically-stacked layout for portrait mode
             VStack {
@@ -115,7 +130,6 @@ struct ConverterView: View {
                 .alert("Choose time", isPresented: $needToSelectFimeField) { } message: {
                     Text("Tap one of the four time fields to enter a time.")
                 }
-
         }
     }
 }
@@ -140,8 +154,8 @@ extension ConverterView {
                     Text("7")
                         .font(buttonFont)
                         .frame(maxWidth: buttonWidth, maxHeight: buttonHeight)
-                        .background(.gray)
-                        .foregroundColor(.white)
+                        .background(buttonBackground)
+                        .foregroundColor(buttonForeground)
                         .clipShape(.capsule)
                         .padding(buttonPadding)
                 }
@@ -151,8 +165,8 @@ extension ConverterView {
                     Text("8")
                         .font(buttonFont)
                         .frame(maxWidth: buttonWidth, maxHeight: buttonHeight)
-                        .background(.gray)
-                        .foregroundColor(.white)
+                        .background(buttonBackground)
+                        .foregroundColor(buttonForeground)
                         .clipShape(.capsule)
                         .padding(buttonPadding)
                 }
@@ -162,8 +176,8 @@ extension ConverterView {
                     Text("9")
                         .font(buttonFont)
                         .frame(maxWidth: buttonWidth, maxHeight: buttonHeight)
-                        .background(.gray)
-                        .foregroundColor(.white)
+                        .background(buttonBackground)
+                        .foregroundColor(buttonForeground)
                         .clipShape(.capsule)
                         .padding(buttonPadding)
                 }
@@ -176,8 +190,8 @@ extension ConverterView {
                     Text("4")
                         .font(buttonFont)
                         .frame(maxWidth: buttonWidth, maxHeight: buttonHeight)
-                        .background(.gray)
-                        .foregroundColor(.white)
+                        .background(buttonBackground)
+                        .foregroundColor(buttonForeground)
                         .clipShape(.capsule)
                         .padding(buttonPadding)
                 }
@@ -187,8 +201,8 @@ extension ConverterView {
                     Text("5")
                         .font(buttonFont)
                         .frame(maxWidth: buttonWidth, maxHeight: buttonHeight)
-                        .background(.gray)
-                        .foregroundColor(.white)
+                        .background(buttonBackground)
+                        .foregroundColor(buttonForeground)
                         .clipShape(.capsule)
                         .padding(buttonPadding)
                 }
@@ -198,8 +212,8 @@ extension ConverterView {
                     Text("6")
                         .font(buttonFont)
                         .frame(maxWidth: buttonWidth, maxHeight: buttonHeight)
-                        .background(.gray)
-                        .foregroundColor(.white)
+                        .background(buttonBackground)
+                        .foregroundColor(buttonForeground)
                         .clipShape(.capsule)
                         .padding(buttonPadding)
                 }
@@ -212,8 +226,8 @@ extension ConverterView {
                     Text("1")
                         .font(buttonFont)
                         .frame(maxWidth: buttonWidth, maxHeight: buttonHeight)
-                        .background(.gray)
-                        .foregroundColor(.white)
+                        .background(buttonBackground)
+                        .foregroundColor(buttonForeground)
                         .clipShape(.capsule)
                         .padding(buttonPadding)
                 }
@@ -223,8 +237,8 @@ extension ConverterView {
                     Text("2")
                         .font(buttonFont)
                         .frame(maxWidth: buttonWidth, maxHeight: buttonHeight)
-                        .background(.gray)
-                        .foregroundColor(.white)
+                        .background(buttonBackground)
+                        .foregroundColor(buttonForeground)
                         .clipShape(.capsule)
                         .padding(buttonPadding)
                 }
@@ -234,8 +248,8 @@ extension ConverterView {
                     Text("3")
                         .font(buttonFont)
                         .frame(maxWidth: buttonWidth, maxHeight: buttonHeight)
-                        .background(.gray)
-                        .foregroundColor(.white)
+                        .background(buttonBackground)
+                        .foregroundColor(buttonForeground)
                         .clipShape(.capsule)
                         .padding(buttonPadding)
                 }
@@ -248,8 +262,8 @@ extension ConverterView {
                     Text("0")
                         .font(buttonFont)
                         .frame(maxWidth: (buttonWidth * 2) + (buttonPadding * 2), maxHeight: buttonHeight)
-                        .background(.gray)
-                        .foregroundColor(.white)
+                        .background(buttonBackground)
+                        .foregroundColor(buttonForeground)
                         .clipShape(.capsule)
                         .padding(buttonPadding)
                 }
@@ -259,8 +273,8 @@ extension ConverterView {
                     Text("del")
                         .font(buttonFont)
                         .frame(maxWidth: buttonWidth, maxHeight: buttonHeight)
-                        .background(.gray)
-                        .foregroundColor(.white)
+                        .background(buttonBackground)
+                        .foregroundColor(buttonForeground)
                         .clipShape(.capsule)
                         .padding(buttonPadding)
                 }
@@ -361,8 +375,8 @@ extension ConverterView {
                 Text("am")
                     .font(buttonFont)
                     .frame(maxWidth: buttonWidth, maxHeight: buttonHeight)
-                    .background(.gray)
-                    .foregroundColor(.white)
+                    .background(buttonBackground)
+                    .foregroundColor(buttonForeground)
                     .clipShape(.capsule)
                     .padding(buttonPadding)
             }
@@ -372,8 +386,8 @@ extension ConverterView {
                 Text("pm")
                     .font(buttonFont)
                     .frame(maxWidth: buttonWidth, maxHeight: buttonHeight)
-                    .background(.gray)
-                    .foregroundColor(.white)
+                    .background(buttonBackground)
+                    .foregroundColor(buttonForeground)
                     .clipShape(.capsule)
                     .padding(buttonPadding)
             }
@@ -491,7 +505,7 @@ extension ConverterView {
             }
         }
         if (selected == .civil_hhmm || selected == .solar_hhmm) {
-            if (!validateHHMMTime(t: enteredNumber)) {
+            if (nDigits < 3 || !validateHHMMTime(t: enteredNumber)) {
                 badHHMMTimeEntered = true
                 return
             }
