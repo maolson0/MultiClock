@@ -60,38 +60,71 @@ extension String {
     }
 }
 
+// We use this notification to reload user defaults from system settings when iOS notifies us that
+// they have changed. Those defaults control whether or not we highlight primes, whether we use a 12-
+// or a 24-hour clock, and the layout of the time converter in landscape mode (keypad on left or on
+// right).
 extension NSNotification {
     static let uDefaults = Notification.Name.init("NSUserDefaultsDidChangeNotification")
 }
 
+// We want to notice when a phone is turned to landscape or portrait mode so that we can lay out the
+// time and converter tab screens in a useful way. We define a view modifier and an extension to the
+// View class here that notice and process such a change. We use the modifier in each of the time and
+// converter views to handle orientation correctly.
+struct DeviceRotationViewModifier: ViewModifier {
+    let action: (UIDeviceOrientation) -> Void
+
+    func body(content: Content) -> some View {
+        content
+            .onAppear()
+            .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
+                action(UIDevice.current.orientation)
+            }
+    }
+}
+
+// A View wrapper to make the modifier easier to use
+extension View {
+    func onRotate(perform action: @escaping (UIDeviceOrientation) -> Void) -> some View {
+        self.modifier(DeviceRotationViewModifier(action: action))
+    }
+}
+
 struct ContentView: View {
     @EnvironmentObject var mc: MultiClock
+    @State private var orientation = UIDeviceOrientation.unknown
     
     var body: some View {
         TabView() {
             TimeView()
                 .tabItem {
                     Label("time", systemImage: "deskclock.fill")
+                        .foregroundColor(.gray)
                     Text("Time")
                 }
             ConverterView()
                 .tabItem {
                     Label("convert", systemImage: "arrow.left.arrow.right.square")
+                        .foregroundColor(.gray)
                     Text("Convert)")
                 }
             InfoView()
                 .tabItem {
                     Label("info", systemImage: "info.circle.fill")
+                        .foregroundColor(.gray)
                     Text("Info")
                 }
-        }.onAppear {
+        }
+        .tabViewStyle(PageTabViewStyle())
+        .indexViewStyle(.page(backgroundDisplayMode: .always))
+        .onAppear {
             NotificationCenter.default.addObserver(forName: NSNotification.uDefaults, object: nil, queue: nil) { _ in
                 // if the user changes defaults in the systems settings, reload the state variables in the clock
                 mc.loadDefaults()
             }
         }
     }
-    
 }
 
 struct ContentView_Previews:

@@ -44,10 +44,10 @@ struct InfoView: View {
                     .italic()
                 Divider()
                 VStack(alignment: .leading) {
-                    Text("Time tab")
+                    Text("Time page")
                         .font(.title3)
                         .bold()
-                    Text("    The time tab at the bottom of the display shows the current civil and solar time as hours and minutes, in metric, and as a percent-of-day-elapsed progress bar.")
+                    Text("    The time page shows the current civil and solar time as hours and minutes, in metric, and as a percent-of-day-elapsed progress bar.")
                     Text(" ")
                     Text("Civil time")
                         .font(.title3)
@@ -84,26 +84,36 @@ struct InfoView: View {
                 }
                 VStack(alignment: .leading) {
                     Text(" ")
+                    Text("Converter page")
+                        .font(.title3)
+                        .bold()
+                    Text("    The converter page allows you to enter civil or solar time, in hours and minutes or in metric, and convert it to all the other displayed times. This is useful if you want to know what civil time it will be at noon solar, for example. Tap on one of the four time fields and use the keypad to enter a time. Hit the blue 'convert' button to do the conversion.")
+                    Text("    Converting between solar and metric times depends on the day of the year, of course, and on your location. The converter uses the current date and location when converting times.")
+                }
+                VStack(alignment: .leading) {
+                    Text(" ")
                     Text("Location services and privacy")
                         .font(.title3)
                         .bold()
                     Text("    To show all of these times, MultiClock needs to know your location. It asks to use your location only while you are using the application. If you choose not to share location information, the clock will still show you the civil time, but will not be able to display solar time or to show sunrise/sunset times.")
                     Text("    Your location is never shared off of your device. It is used only to determine solar time and sunrise/sunset times.")
                     Text("    If you allow the application to use your precise location, solar time and sunrise/sunset times will be most accurate. If you share your location, but not your precise location, those times will be slightly less accurate.")
-                    Text("    You can change whether and how the clock can access your location in your device settings. Go to Settings -> Privacy and security and change the setting for this application.")
+                    Text("    You can change whether and how the clock can access your location in your device settings. Go to Settings -> Privacy and security, or to the app settings for Multiclock in the iOS Settings appliction, to change the setting for this application.")
                 }
                 VStack(alignment: .leading) {
                     Text(" ")
                     Text("Preferences")
                         .font(.title3)
                         .bold()
-                    Text("     You can change the app's behavior using the preferences tab.")
-                    Text("     By default, the clock uses 12-hour, AM/PM display format for hh:mm times. You can switch to a 24-hour clock display. If you have your system-wide preference set for a 24-hour clock (see Preferences -> General -> Date and Time), that setting will override this one.")
-                    Text("      Out of respect for prime numbers and the important work that they do, if any of the metric times on the screen is prime, it will be highlighted in red. It's a prime time! You can turn this behavior off or on.")
+                    Text("    You can change the app's behavior in the iOS Settings app, in the entry for Multiclock.")
+                    Text("    By default, the clock uses 12-hour, AM/PM display format for hh:mm times. You can switch to a 24-hour clock display. If you have your system-wide preference set for a 24-hour clock (see Preferences -> General -> Date and Time), that setting will override this one.")
+                    Text("    Out of respect for prime numbers and the important work that they do, if any of the metric times on the screen is prime, it will be highlighted in red. It's a prime time! You can turn this behavior off or on.")
+                    Text("    When your phone is in portrait mode (vertical), the converter displays the keypad below the area where the times are shown. If you turn your phone on its side, to landscape mode, the converter places the keypad next to the time display. You can control whether the keypad is on the left or the right by setting left-handed mode in the settings. This makes it easier to type in times with your dominant hand without covering up the time display.")
                 }
             }
         }
-        .padding(10)
+        .padding(.vertical, 50)
+        .padding(.horizontal, 20)
     }
 }
 

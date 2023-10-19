@@ -35,6 +35,9 @@ import SwiftUI
 struct TimeView: View {
     @EnvironmentObject var mc: MultiClock
     @Environment(\.colorScheme) private var colorScheme
+    
+    let hPadding: CGFloat = 20
+    let vPadding: CGFloat = 50
 
     var body: some View {
         if (UIDevice.current.orientation.isLandscape) {
@@ -56,7 +59,8 @@ struct TimeView: View {
                 Divider()
                 solar
             }
-            .padding(10)
+            .padding(.vertical, vPadding)
+            .padding(.horizontal, hPadding)
         }
     }
 }

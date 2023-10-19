@@ -43,7 +43,8 @@ struct ConverterView: View {
     let buttonPadding: CGFloat = 3
     let buttonForeground = Color.white
     let buttonBackground = Color.gray
-    let framePadding: CGFloat = 10
+    let hPadding: CGFloat = 20
+    let vPadding: CGFloat = 50
     let textWid = 100.0
     let textFont = Font.title
 
@@ -89,7 +90,9 @@ struct ConverterView: View {
                         }
                     }
                }
-            }.padding(framePadding)
+            }
+                .padding(.vertical, vPadding)
+                .padding(.horizontal, hPadding)
                 .alert("Invalid time", isPresented: $badHHMMTimeEntered) { } message: {
                     if (mc.mc_12hour) {
                         Text("Please enter a time between 12:00 am and 11:59 pm.")
@@ -116,7 +119,9 @@ struct ConverterView: View {
                         ampmPad         // the am/pm buttons
                     }
                 }
-            }.padding(framePadding)
+            }
+                .padding(.vertical, vPadding)
+                .padding(.horizontal, hPadding)
                 .alert("Invalid time", isPresented: $badHHMMTimeEntered) { } message: {
                     if (mc.mc_12hour) {
                         Text("Please enter a time between 12:00 am and 11:59 pm.")
