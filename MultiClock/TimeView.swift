@@ -45,17 +45,15 @@ struct TimeView: View {
             HStack {
                 civil
                 Divider()
-                Divider()
                 solar
             }
-            .padding(10)
-            .padding(10)
+            .padding(.vertical, vPadding)
+            .padding(.horizontal, hPadding)
         } else {
             // stacked vertical display in portrait mode
             VStack {
                 Spacer()
                 civil
-                Divider()
                 Divider()
                 solar
             }

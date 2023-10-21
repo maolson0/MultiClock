@@ -44,6 +44,9 @@ var nPrimes = 26
 extension String {
     var isPrimeMetricTime: Bool {
         if let mt = Int(self) {
+            if (mt < 2) {
+                return false
+            }
             for i in 0...nPrimes-1 {
                 if (mt == PrimeList[i]) {
                     return true
@@ -102,19 +105,19 @@ struct ContentView: View {
                     Label("time", systemImage: "deskclock.fill")
                         .foregroundColor(.gray)
                     Text("Time")
-                }
+                }.tag(0)
             ConverterView()
                 .tabItem {
                     Label("convert", systemImage: "arrow.left.arrow.right.square")
                         .foregroundColor(.gray)
                     Text("Convert)")
-                }
+                }.tag(1)
             InfoView()
                 .tabItem {
                     Label("info", systemImage: "info.circle.fill")
                         .foregroundColor(.gray)
                     Text("Info")
-                }
+                }.tag(2)
         }
         .tabViewStyle(PageTabViewStyle())
         .indexViewStyle(.page(backgroundDisplayMode: .always))

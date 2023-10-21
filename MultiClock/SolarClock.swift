@@ -127,7 +127,6 @@ class SolarClock: NSObject, CLLocationManagerDelegate {
      */
 
     private func equation_of_time(year: Int, month: Int, day: Int, hour: Int) -> Double
-    //private func equation_of_time(d: Date) -> Double
     {
         var cycle: Double
 
@@ -221,5 +220,41 @@ class SolarClock: NSObject, CLLocationManagerDelegate {
             // If we don't know our location we can't know the solar time
             sc_solar_time = nil
         }
+    }
+    
+    // This interface allows a caller to get the solar/civil delta as of a particular date and hour.
+    // It supports a requested feature for the MultiClock: converting among solar and civil times.
+    func sc_delta(yyyy: Int, mm: Int, dd: Int, hh: Int) -> Double?
+    {
+        // Only accurate for the current century
+        if (yyyy < 2000 || yyyy > 2099) {
+            return nil
+        }
+        
+        if let curLoc = sc_loc {
+            // compute the equation of time for the supplied day/hour
+            let ondate_eot = equation_of_time(year: yyyy, month: mm, day: dd, hour: hh)
+            
+            /*
+             * The tricky bit! If the sign of EoT is positive, that means that the solar clock is
+             * ahead of the civil clock -- solar noon comes after civil noon. We're going to compute
+             * solar time starting from civil time, so we need to subtract the difference due to EoT
+             * instead of adding it. So, we flip the sign in our solarDelta calculation.
+             *
+             * We also need to adjust for our location on the face of the planet. We use our location
+             * to get current longitude. Every degree of longitude is 4 minutes of clock time (24
+             * notional one-hour time zones, each 15 minutes wide). So we compute minutes due to
+             * longitude and add that in as well.
+             *
+             * The TimeInterval type is in seconds so we need to convert from minutes to seconds.
+             *
+             *  A week of debugging taught me: Always know the sign of the equation of time!
+             */
+            let solarDelta = (-ondate_eot + (curLoc.longitude * 4.0)) * 60.0
+            
+            return solarDelta
+        }
+        
+        return nil
     }
 }

@@ -339,55 +339,63 @@ extension MultiClock {
     }
 }
 
+// The MultiClock has a converter tab that lets the user enter a solar or metric time in metric or hh:mm format,
+// pick a date, and convert the input time to all the other varieties as of that date. The function below supports
+// that converter. The t parameter is a 4-digit input, the which parameter identifies solar/civil hhmm/metric,
+// and the case statement handles the bookkeeping for each of those cases.
 extension MultiClock {
-    func convertTime(t: Int, which: Selection) -> TimeConverter {
+    func convertTime(t: Int, dd: Int, mm: Int, yyyy: Int, which: Selection) -> TimeConverter {
         let new_tc = TimeConverter()
         
-        let solarTime = mc_sc.sc_solar_time
-        let civilTime = mc_sc.sc_civil_time
-            
-        // Solar/civil delta in seconds
-        let solar_civil_delta = civilTime.distance(to: solarTime!)
-
         switch which {
         case .civil_hhmm:
-            let hh = t / 100
-            let mm = t % 100
-            let secsSinceMidnight = Double(((hh * 60) + mm) * 60)
+            let hr = t / 100
+            let min = t % 100
+            let secsSinceMidnight = Double(((hr * 60) + min) * 60)
             let civmet = secsSinceMidnight / 8.64
             new_tc.tc_civil_metric = getMetricTimeString(t: civmet)
             
-            let components = DateComponents(year: civilTime.get(.year), month: civilTime.get(.month), day: civilTime.get(.day), hour: hh, minute: mm)
+            let components = DateComponents(year: yyyy, month: mm, day: dd, hour: hr, minute: min)
             let cal = Calendar.current
             let civdate = cal.date(from: components)
             new_tc.tc_civil_hhmm = getHHMMTimeString(d: civdate!, useGMT: false)
-
-            let soldate = civdate!.addingTimeInterval(solar_civil_delta)
-            new_tc.tc_solar_hhmm = getHHMMTimeString(d: soldate, useGMT: true)
-
-            let solarSecsSinceMidnight = soldate.timeIntervalSinceMidnightGMT
-            let solmet = solarSecsSinceMidnight! / 8.64
-            new_tc.tc_solar_metric = getMetricTimeString(t: solmet)
+            
+            if let solar_civil_delta = mc_sc.sc_delta(yyyy: yyyy, mm: mm, dd: dd, hh: hr) {
+                let soldate = civdate!.addingTimeInterval(solar_civil_delta)
+                new_tc.tc_solar_hhmm = getHHMMTimeString(d: soldate, useGMT: true)
+                let solarSecsSinceMidnight = soldate.timeIntervalSinceMidnightGMT
+                let solmet = solarSecsSinceMidnight! / 8.64
+                new_tc.tc_solar_metric = getMetricTimeString(t: solmet)
+            } else {
+                // no solar delta available -- location services off
+                new_tc.tc_solar_metric = " "
+                new_tc.tc_solar_hhmm = " "
+            }
 
         case .solar_hhmm:
-            let hh = t / 100
-            let mm = t % 100
-            let solarSecsSinceMidnight = Double(((hh * 60) + mm) * 60)
+            let hr = t / 100
+            let min = t % 100
+            let solarSecsSinceMidnight = Double(((hr * 60) + min) * 60)
             let solmet = solarSecsSinceMidnight / 8.64
             new_tc.tc_solar_metric = getMetricTimeString(t: solmet)
             
-            let components = DateComponents(year: solarTime!.get(.year), month: solarTime!.get(.month), day: solarTime!.get(.day), hour: hh, minute: mm)
+            let components = DateComponents(year: yyyy, month: mm, day: dd, hour: hr, minute: min)
             var cal = Calendar(identifier: .iso8601)
             cal.timeZone = TimeZone(identifier: "UTC")!
             let soldate = cal.date(from: components)
             new_tc.tc_solar_hhmm = getHHMMTimeString(d: soldate!, useGMT: true)
 
-            let civdate = soldate!.addingTimeInterval(-solar_civil_delta)
-            new_tc.tc_civil_hhmm = getHHMMTimeString(d: civdate, useGMT: false)
-
-            let secsSinceMidnight = civdate.timeIntervalSinceMidnightLocal
-            let civmet = secsSinceMidnight! / 8.64
-            new_tc.tc_civil_metric = getMetricTimeString(t: civmet)
+            if let solar_civil_delta = mc_sc.sc_delta(yyyy: yyyy, mm: mm, dd: dd, hh: hr) {
+                let civdate = soldate!.addingTimeInterval(0.0 - solar_civil_delta)
+                new_tc.tc_civil_hhmm = getHHMMTimeString(d: civdate, useGMT: false)
+                let secsSinceMidnight = civdate.timeIntervalSinceMidnightLocal
+                let civmet = secsSinceMidnight! / 8.64
+                new_tc.tc_civil_metric = getMetricTimeString(t: civmet)
+            } else {
+                // no solar delta available -- location services off
+                new_tc.tc_civil_metric = " "
+                new_tc.tc_civil_hhmm = " "
+            }
 
         case .solar_metric:
             new_tc.tc_solar_metric = getMetricTimeString(t: Double(t))
@@ -395,32 +403,42 @@ extension MultiClock {
             let solarSecsSinceMidnight = Double(t) * 8.64
             var cal = Calendar(identifier: .iso8601)
             cal.timeZone = TimeZone(identifier: "UTC")!
-            let components = DateComponents(year: solarTime!.get(.year), month: solarTime!.get(.month), day: solarTime!.get(.day), hour: 0, minute: 0)
+            let components = DateComponents(year: yyyy, month: mm, day: dd, hour: 0, minute: 0)
             let soldate = cal.date(from: components)!.addingTimeInterval(solarSecsSinceMidnight)
             new_tc.tc_solar_hhmm = getHHMMTimeString(d: soldate, useGMT: true)
-
-            let civdate = soldate.addingTimeInterval(-solar_civil_delta)
-            new_tc.tc_civil_hhmm = getHHMMTimeString(d: civdate, useGMT: false)
-            
-            let secsSinceMidnight = civdate.timeIntervalSinceMidnightLocal
-            let civmet = secsSinceMidnight! / 8.64
-            new_tc.tc_civil_metric = getMetricTimeString(t: civmet)
+            let hh = Int(solarSecsSinceMidnight / 3600.0)
+            if let solar_civil_delta = mc_sc.sc_delta(yyyy: yyyy, mm: mm, dd: dd, hh: hh) {
+                let civdate = soldate.addingTimeInterval(0.0 - solar_civil_delta)
+                new_tc.tc_civil_hhmm = getHHMMTimeString(d: civdate, useGMT: false)
+                let secsSinceMidnight = civdate.timeIntervalSinceMidnightLocal
+                let civmet = secsSinceMidnight! / 8.64
+                new_tc.tc_civil_metric = getMetricTimeString(t: civmet)
+            } else {
+                // no solar delta available -- location services off
+                new_tc.tc_civil_metric = " "
+                new_tc.tc_civil_hhmm = " "
+            }
 
         case .civil_metric:
             new_tc.tc_civil_metric = getMetricTimeString(t: Double(t))
             
             let secsSinceMidnight = Double(t) * 8.64
             let cal = Calendar.current
-            let components = DateComponents(year: civilTime.get(.year), month: civilTime.get(.month), day: civilTime.get(.day), hour: 0, minute: 0)
+            let components = DateComponents(year: yyyy, month: mm, day: dd, hour: 0, minute: 0)
             let civdate = cal.date(from: components)!.addingTimeInterval(secsSinceMidnight)
             new_tc.tc_civil_hhmm = getHHMMTimeString(d: civdate, useGMT: false)
-
-            let soldate = civdate.addingTimeInterval(solar_civil_delta)
-            new_tc.tc_solar_hhmm = getHHMMTimeString(d: soldate, useGMT: true)
-            
-            let solarSecsSinceMidnight = soldate.timeIntervalSinceMidnightGMT
-            let solmet = solarSecsSinceMidnight! / 8.64
-            new_tc.tc_solar_metric = getMetricTimeString(t: solmet)
+            let hh = Int(secsSinceMidnight / 3600.0)
+            if let solar_civil_delta = mc_sc.sc_delta(yyyy: yyyy, mm: mm, dd: dd, hh: hh) {
+                let soldate = civdate.addingTimeInterval(solar_civil_delta)
+                new_tc.tc_solar_hhmm = getHHMMTimeString(d: soldate, useGMT: true)
+                let solarSecsSinceMidnight = soldate.timeIntervalSinceMidnightGMT
+                let solmet = solarSecsSinceMidnight! / 8.64
+                new_tc.tc_solar_metric = getMetricTimeString(t: solmet)
+            } else {
+                // no solar delta available -- location services off
+                new_tc.tc_solar_metric = " "
+                new_tc.tc_solar_hhmm = " "
+            }
         }
         
         return (new_tc)

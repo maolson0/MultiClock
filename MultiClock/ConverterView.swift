@@ -28,6 +28,10 @@ struct ConverterView: View {
     @State private var solar_metric = "0000"
     @State private var isAmPm: AmPm? = nil
     
+    // Time conversion depends on location and date. We use the current location to do the conversion, but
+    // allow the user to choose the day of the year on which we convert. We default to the current day.
+    @State private var onDate = Date()
+
     // store the digits entered by the user
     @State private var digits: [Int?] = [nil, nil, nil, nil]
     @State private var nDigits = 0
@@ -53,7 +57,6 @@ struct ConverterView: View {
         if (UIDevice.current.orientation.isLandscape) {
             // side-by-side layout for landscape mode
             VStack {
-                Spacer()
                 header
                 if (mc.mc_lhconverter) {
                     // lefties get the keypad on the left
@@ -64,8 +67,8 @@ struct ConverterView: View {
                                 ampmPad         // the am/pm buttons
                             }
                             Divider()
-                            Divider()
                             VStack {
+                                datePicker          // the date on which to do the conversion
                                 timeConvertDisplay  // Four time fields and the convert button
                                 labelRow            // Row that labels civil and solar time and has "convert" button
                                 Spacer()
@@ -76,11 +79,11 @@ struct ConverterView: View {
                     // righties get the keypad on the right
                     HStack {
                         VStack {
+                            datePicker          // the date on which to do the conversion
                             timeConvertDisplay  // Four time fields and the convert button
                             labelRow            // Row that labels civil and solar time and has "convert" button
                             Spacer()
                         }
-                        Divider()
                         Divider()
                         HStack {
                             digitPad        // The 0-9 pad with the "del" key
@@ -111,6 +114,7 @@ struct ConverterView: View {
             VStack {
                 Spacer()
                 header
+                datePicker          // the date on which to do the conversion
                 timeConvertDisplay  // Four time fields and the convert button
                 labelRow            // Row that labels civil and solar time and has "convert" button
                 HStack {
@@ -536,7 +540,12 @@ extension ConverterView {
             }
         }
         
-        let tc = mc.convertTime(t: enteredNumber, which: selected!)
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.year, .month, .day], from: onDate)
+        let yyyy = components.year!
+        let mm = components.month!
+        let dd = components.day!
+        let tc = mc.convertTime(t: enteredNumber, dd: dd, mm: mm, yyyy: yyyy, which: selected!)
         
         civil_hhmm = tc.tc_civil_hhmm
         civil_metric = tc.tc_civil_metric
@@ -689,6 +698,23 @@ extension ConverterView {
             digits[i] = nil
         }
         nDigits = 0
+    }
+}
+
+extension ConverterView {
+    private var datePicker: some View {
+        HStack {
+            // XXX set min/max dates -- current century only
+            DatePicker("As of: ", selection: $onDate, displayedComponents: [.date])
+                .font(textFont)
+                .datePickerStyle(CompactDatePickerStyle())
+            Button {
+                onDate = Date()
+            } label: {
+                Text("Today")
+            }
+            .buttonStyle(.bordered)
+        }
     }
 }
 
