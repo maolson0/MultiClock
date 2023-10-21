@@ -1,8 +1,8 @@
 //
-//  CivilClockView.swift
+//  TimeView.swift
 //  MultiClock
 //
-//  Displays the MultiClock's "Civil Time" tab.
+//  Displays the MultiClock's Time tab.
 //
 //  Copyright 2023, Michael A. Olson.
 //
@@ -72,9 +72,9 @@ extension TimeView {
                     Image(systemName: "building.columns")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 40, height:40)
+                        .frame(width: 35, height: 35)
                     Text("Civil Time")
-                        .font(.system(size: 30, weight: .bold))
+                        .font(.system(size: 20, weight: .bold))
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
             }
@@ -84,13 +84,13 @@ extension TimeView {
                     Image(systemName: "deskclock")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 40, height: 40)
+                        .frame(width: 35, height: 35)
                     Text("hh:mm")
                 }
                 Spacer()
                 VStack(alignment: .trailing, spacing: 6) {
                     Text(mc.civil_hhmm)
-                        .font(.largeTitle)
+                        .font(.title)
                     HStack {
                         Image(systemName: "sunrise")
                             .resizable()
@@ -114,13 +114,13 @@ extension TimeView {
                     Image(systemName: "ruler")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 40, height: 40)
+                        .frame(width: 35, height: 35)
                     Text("metric")
                 }
                 Spacer()
                 VStack(alignment: .trailing, spacing: 6) {
                     Text(mc.civil_metric)
-                        .font(.largeTitle)
+                        .font(.title)
                         .foregroundColor(mc.civil_metric.isPrimeMetricTime && mc.mc_primetime ?
                                          .red : (colorScheme == .dark ? .white : .black))
                     HStack {
@@ -164,9 +164,9 @@ extension TimeView {
                     Image(systemName: "sun.max")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 40, height:40)
+                        .frame(width: 35, height:35)
                     Text("Solar Time")
-                        .font(.system(size: 30, weight: .bold))
+                        .font(.system(size: 20, weight: .bold))
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
             }
@@ -176,13 +176,13 @@ extension TimeView {
                     Image(systemName: "deskclock")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 40, height: 40)
+                        .frame(width: 35, height: 35)
                     Text("hh:mm")
                 }
                 Spacer()
                 VStack(alignment: .trailing, spacing: 6) {
                     Text(mc.solar_hhmm)
-                        .font(.largeTitle)
+                        .font(.title)
                     HStack {
                         Image(systemName: "sunrise")
                             .resizable()
@@ -212,7 +212,7 @@ extension TimeView {
                 Spacer()
                 VStack(alignment: .trailing, spacing: 6) {
                     Text(mc.solar_metric)
-                        .font(.largeTitle)
+                        .font(.title)
                         .foregroundColor(mc.solar_metric.isPrimeMetricTime && mc.mc_primetime ?
                                          .red : (colorScheme == .dark ? .white : .black))
                     HStack {

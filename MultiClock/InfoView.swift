@@ -2,7 +2,7 @@
 //  InfoView.swift
 //  MultiClock
 //
-//  Displays the MultiClock's "info" tab.
+//  Displays the MultiClock's Info tab.
 //
 //  Copyright 2023, Michael A. Olson.
 //
@@ -45,7 +45,7 @@ struct InfoView: View {
                 Divider()
                 VStack(alignment: .leading) {
                     Text("Time page")
-                        .font(.title3)
+                        .font(.title2)
                         .bold()
                     Text("    The time page shows the current civil and solar time as hours and minutes, in metric, and as a percent-of-day-elapsed progress bar.")
                     Text(" ")
@@ -85,15 +85,15 @@ struct InfoView: View {
                 VStack(alignment: .leading) {
                     Text(" ")
                     Text("Converter page")
-                        .font(.title3)
+                        .font(.title2)
                         .bold()
                     Text("    The converter page allows you to enter civil or solar time, in hours and minutes or in metric, and convert it to all the other displayed times. This is useful if you want to know what civil time it will be at noon solar, for example. Tap on one of the four time fields and use the keypad to enter a time. Hit the blue 'convert' button to do the conversion.")
-                    Text("    Converting between solar and metric times depends on the day of the year, of course, and on your location. The converter uses the current date and location when converting times.")
+                    Text("    Converting between solar and metric times depends on the day of the year, of course, and on your location. The converter allows you to choose a date and and uses the current location when converting times.")
                 }
                 VStack(alignment: .leading) {
                     Text(" ")
                     Text("Location services and privacy")
-                        .font(.title3)
+                        .font(.title2)
                         .bold()
                     Text("    To show all of these times, MultiClock needs to know your location. It asks to use your location only while you are using the application. If you choose not to share location information, the clock will still show you the civil time, but will not be able to display solar time or to show sunrise/sunset times.")
                     Text("    Your location is never shared off of your device. It is used only to determine solar time and sunrise/sunset times.")
