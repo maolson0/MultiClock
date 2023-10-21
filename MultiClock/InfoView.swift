@@ -36,7 +36,7 @@ struct InfoView: View {
     var body: some View {
         ScrollView {
             Text("MultiClock")
-                .font(.largeTitle)
+                .font(.system(size: 30, weight: .bold))
                 .multilineTextAlignment(.center)
             Divider()
             VStack(alignment: .leading) {
@@ -103,7 +103,7 @@ struct InfoView: View {
                 VStack(alignment: .leading) {
                     Text(" ")
                     Text("Preferences")
-                        .font(.title3)
+                        .font(.title2)
                         .bold()
                     Text("    You can change the app's behavior in the iOS Settings app, in the entry for Multiclock.")
                     Text("    By default, the clock uses 12-hour, AM/PM display format for hh:mm times. You can switch to a 24-hour clock display. If you have your system-wide preference set for a 24-hour clock (see Preferences -> General -> Date and Time), that setting will override this one.")

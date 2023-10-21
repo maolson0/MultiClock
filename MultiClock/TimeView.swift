@@ -74,7 +74,7 @@ extension TimeView {
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 35, height: 35)
                     Text("Civil Time")
-                        .font(.system(size: 20, weight: .bold))
+                        .font(.system(size: 30, weight: .bold))
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
             }
@@ -166,7 +166,7 @@ extension TimeView {
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 35, height:35)
                     Text("Solar Time")
-                        .font(.system(size: 20, weight: .bold))
+                        .font(.system(size: 30, weight: .bold))
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
             }

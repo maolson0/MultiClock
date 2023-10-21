@@ -750,7 +750,7 @@ extension ConverterView {
             Image(systemName: "arrow.left.arrow.right.square")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(width: 40, height:40)
+                .frame(width: 35, height: 35)
             Text("Convert")
                 .font(.system(size: 30, weight: .bold))
         }
