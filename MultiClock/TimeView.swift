@@ -40,7 +40,7 @@ struct TimeView: View {
     let vPadding: CGFloat = 50
 
     var body: some View {
-        if (UIDevice.current.orientation.isLandscape) {
+        if (UIDevice.current.orientation.isLandscape && UIDevice.current.userInterfaceIdiom == .phone) {
             // side-by-side display in landscape mode
             HStack {
                 civil

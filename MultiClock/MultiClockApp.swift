@@ -368,8 +368,8 @@ extension MultiClock {
                 new_tc.tc_solar_metric = getMetricTimeString(t: solmet)
             } else {
                 // no solar delta available -- location services off
-                new_tc.tc_solar_metric = " "
-                new_tc.tc_solar_hhmm = " "
+                new_tc.tc_solar_metric = "---"
+                new_tc.tc_solar_hhmm = "---"
             }
 
         case .solar_hhmm:
@@ -393,8 +393,8 @@ extension MultiClock {
                 new_tc.tc_civil_metric = getMetricTimeString(t: civmet)
             } else {
                 // no solar delta available -- location services off
-                new_tc.tc_civil_metric = " "
-                new_tc.tc_civil_hhmm = " "
+                new_tc.tc_civil_metric = "---"
+                new_tc.tc_civil_hhmm = "---"
             }
 
         case .solar_metric:
@@ -415,8 +415,8 @@ extension MultiClock {
                 new_tc.tc_civil_metric = getMetricTimeString(t: civmet)
             } else {
                 // no solar delta available -- location services off
-                new_tc.tc_civil_metric = " "
-                new_tc.tc_civil_hhmm = " "
+                new_tc.tc_civil_metric = "---"
+                new_tc.tc_civil_hhmm = "---"
             }
 
         case .civil_metric:
@@ -436,8 +436,8 @@ extension MultiClock {
                 new_tc.tc_solar_metric = getMetricTimeString(t: solmet)
             } else {
                 // no solar delta available -- location services off
-                new_tc.tc_solar_metric = " "
-                new_tc.tc_solar_hhmm = " "
+                new_tc.tc_solar_metric = "---"
+                new_tc.tc_solar_hhmm = "---"
             }
         }
         

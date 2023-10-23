@@ -80,7 +80,7 @@ struct ConverterView: View {
 
     // This is the converter view, composed of variables defined below to cut down clutter a bit.
     var body: some View {
-        if (UIDevice.current.orientation.isLandscape) {
+        if (UIDevice.current.orientation.isLandscape && UIDevice.current.userInterfaceIdiom == .phone) {
             // side-by-side layout for landscape mode
             VStack {
                 header
