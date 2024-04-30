@@ -105,6 +105,7 @@ class MultiClock: ObservableObject {
     var mc_primetime = true
     var mc_12hour = true
     var mc_lhconverter = false
+    var mc_idletimerdisabled = false
     
     // These are all strings to simplify their display in their respective views
 
@@ -329,6 +330,7 @@ class MultiClock: ObservableObject {
         self.mc_12hour = defaults.bool(forKey: "mc_12hour")
         self.mc_primetime = defaults.bool(forKey: "mc_primetime")
         self.mc_lhconverter = defaults.bool(forKey: "mc_lefthanded")
+        self.mc_idletimerdisabled = defaults.bool(forKey: "mc_idletimerdisabled")
     }
 }
 

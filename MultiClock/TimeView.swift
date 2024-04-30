@@ -47,6 +47,8 @@ struct TimeView: View {
                 Divider()
                 solar
             }
+            .onAppear { UIApplication.shared.isIdleTimerDisabled = mc.mc_idletimerdisabled }
+            .onDisappear { UIApplication.shared.isIdleTimerDisabled = false }
             .padding(.vertical, vPadding)
             .padding(.horizontal, hPadding)
         } else {
@@ -57,6 +59,8 @@ struct TimeView: View {
                 Divider()
                 solar
             }
+            .onAppear { UIApplication.shared.isIdleTimerDisabled = mc.mc_idletimerdisabled }
+            .onDisappear { UIApplication.shared.isIdleTimerDisabled = false }
             .padding(.vertical, vPadding)
             .padding(.horizontal, hPadding)
         }
